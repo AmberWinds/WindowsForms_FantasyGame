@@ -15,6 +15,7 @@ namespace GADE6112POE_Part1_v01
         private HeroTile hero;
         private Position heroPosition;
         private ExitTile exit;
+        private EnemyTile[] enemies;
 
         //Properties
         public int getWidth { get { return width; } }
@@ -23,8 +24,9 @@ namespace GADE6112POE_Part1_v01
         public HeroTile Hero { get { return hero; } }
         public Position HeroPosition { get { return heroPosition; } set { heroPosition = value; } }
         public ExitTile Exit { get { return exit; } }
+        public EnemyTile[] Enemies {get { return enemies; } }
         //Constructor
-        public Level(int  width, int height, HeroTile heroLevel = null)
+        public Level(int  width, int height, HeroTile heroLevel = null,int numEnemies)
         {
             this.width = width;
             this.height = height;
@@ -32,6 +34,14 @@ namespace GADE6112POE_Part1_v01
             InitialiseTiles();
 
             hero = heroLevel;
+
+            enemies = new EnemyTile[numEnemies];
+            for(int i = 0; i < numEnemies; i++)
+            {
+                Position enemyPosition = GetRandomEmptyPosition();
+                enemies[i] = (EnemyTile)CreateTile(TileType.Enemy, enemyPosition);
+                tiles[enemyPosition.X,enemyPosition.Y] = enemies[i];                                                                                                                                                                                                                                                                                
+            }
 
             //Q4.3
             if (heroLevel == null)   //if hero == null, will set a new HeroTile
@@ -60,7 +70,8 @@ namespace GADE6112POE_Part1_v01
             Empty,
             Wall,
             Hero,
-            Exit
+            Exit,
+            Enemy,  // Added Enemy here
         }
         public enum Direction       //Direction enum, used when a players inputs a direction key to Move.
         {
@@ -87,6 +98,8 @@ namespace GADE6112POE_Part1_v01
                     return new ExitTile(position);
                 default:
                     return new EmptyTile(position);
+                case TileType.Enemy:  // this case is for creating GruntTile
+                    return new GruntTile(position);
             }
         }//end of Method
 
@@ -174,6 +187,17 @@ namespace GADE6112POE_Part1_v01
             return buildString.ToString();
         }
 
+        public void UpdateVision()
+        {
+            if(hero != null)
+            {
+                hero.UpdateVision;
+            }
+            foreach(var enemy in enemies)
+            {
+                enemy.UpdateVision;
+            }
+        }
 
 
     }//end of Level Class
