@@ -6,23 +6,74 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
-    //internal class GruntTile: EnemyTile
-    //{
-    //    //Variables
-    //    CharacterTile grunt;
-    //    //CONSTRUCTOR
-    //    public GruntTile(Position gruntUnit): base(gruntUnit, 10, 1)
-    //    {
+    internal class GruntTile : EnemyTile
+    {
+        //Variables
+        Position gruntPosition;
+        GameEngine engine;
+        //CONSTRUCTOR
+        public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1)
+        {
+            gruntPosition = gruntUnit;
+        }
+        //OVERRIDE DISPLAY  
+        public override char Display
+        {
+            get { if (isDead()) { return 'x'; } else { return 'Ϫ'; } } //if hero is dead returns a 'x'
+        }
 
-    //    }
-    //    //OVERRIDE DISPLAY  
-    //    public override char Display
-    //    {
-    //        get { if (isDead()) { return 'x'; } else { return 'Ϫ'; } } //if hero is dead returns a 'x'
-    //    }
 
-    //    //ABSTRACT MEMBER
+        //ABSTRACT MEMBER OVERRIDES
+        public override bool GetMove(out Tile move)
+        {    
+            int canMove = 0;
+            UpdateVision(engine.CurrentLevel, gruntPosition);
+            for (int i = 0; i <= 3; i++)
+            {
+                if (Vision[i] is EmptyTile)
+                {
+                    canMove += 1;
+                }
+            }
 
+            int randomMove = new Random().Next(0, canMove);
+
+            if (canMove > 0)
+            {
+                move = Vision[randomMove];
+                return true;
+            }
+            else
+            {
+                move = null;
+                return false;
+            }
+        }
+
+        public override CharacterTile[] GetTargets()
+        {
+            CharacterTile[] targets = null;
+            int canTarget = -1;
+            UpdateVision(engine.CurrentLevel, gruntPosition);
+            for (int i = 0; i <= 3; i++)
+            {
+                if (Vision[i] is HeroTile)
+                {
+                    canTarget = i;
+                }
+            }
+
+            if (canTarget >= 0)
+            {
+                targets[0] = (CharacterTile)Vision[canTarget];
+                return targets;
+            }
+            else
+            {
+                return targets;
+            }
+
+        }
 
 
     }

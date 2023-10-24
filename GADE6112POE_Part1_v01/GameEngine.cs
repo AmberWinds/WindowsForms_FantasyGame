@@ -30,7 +30,8 @@ namespace GADE6112POE_Part1_v01
             Complete,
             GameOver
         }
-
+        //PROPERTIES
+        public Level CurrentLevel { get { return currentLevel; } }
 
         //CONSTRUCTOR
         public GameEngine(int numLevels)
@@ -112,7 +113,7 @@ namespace GADE6112POE_Part1_v01
                 if (targetTile is EmptyTile && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
                 {
                     currentLevel.SwapTiles(heroTile, targetTile);
-                    currentLevel.Hero.UpdateVision(currentLevel);
+                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
                     return true;
                 }
                 else
