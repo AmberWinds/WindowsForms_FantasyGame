@@ -47,11 +47,11 @@
             // lblHeading
             // 
             lblHeading.AutoSize = true;
-            lblHeading.Font = new Font("Facon", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblHeading.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             lblHeading.ForeColor = Color.DarkSlateGray;
             lblHeading.Location = new Point(553, 45);
             lblHeading.Name = "lblHeading";
-            lblHeading.Size = new Size(268, 82);
+            lblHeading.Size = new Size(269, 78);
             lblHeading.TabIndex = 1;
             lblHeading.Text = "WELCOME TO \r\nTHE GAME";
             lblHeading.TextAlign = ContentAlignment.MiddleCenter;
@@ -85,9 +85,9 @@
             label1.ForeColor = SystemColors.ControlText;
             label1.Location = new Point(610, 314);
             label1.Name = "label1";
-            label1.Size = new Size(161, 126);
+            label1.Size = new Size(161, 168);
             label1.TabIndex = 4;
-            label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\n\r\n";
+            label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n\r\n\r\n";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form1
