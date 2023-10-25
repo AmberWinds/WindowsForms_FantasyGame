@@ -13,6 +13,8 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
+        private int HitPoints;
+        private int MaxHitPoints;
 
         //constructor
         public CharacterTile(Position pos, int hP, int atkPower) : base(pos)
@@ -44,6 +46,16 @@ namespace GADE6112POE_Part1_v01
                 isDead();
             }
         }
+
+        public void Heal(int amount)
+        {
+            HitPoints += amount;
+            if (HitPoints > MaxHitPoints)
+            {
+                HitPoints = MaxHitPoints;
+            }
+        }
+
 
         public void Attack(CharacterTile opponent)
         {

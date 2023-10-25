@@ -15,6 +15,8 @@ namespace GADE6112POE_Part1_v01
 
         }
 
+        public Position Position { get; internal set; }
+
         //METHODS
         public abstract bool GetMove(out Tile move);
 

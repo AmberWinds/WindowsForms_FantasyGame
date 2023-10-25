@@ -21,6 +21,7 @@ namespace GADE6112POE_Part1_v01
         GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
         private int currentLevelNumber = 1; // Added field to track current level number
+        private int heroHitPoints;
 
         //constants
         private const int maxSize = 20;
@@ -173,35 +174,38 @@ namespace GADE6112POE_Part1_v01
         }
         //ENEMY ATTACK METHODS
         private void EnemiesAttack()
-        {     
+        {
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
                 EnemyTile enemy = currentLevel.Enemies[i];
 
-               
+
                 if (enemy == null || enemy.isDead()) // Skips the enemy if it's null or dead
                 {
                     continue;
                 }
 
-             
+
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
 
                 foreach (CharacterTile target in targets)
                 {
                     if (target is HeroTile)
                     {
-                       
+
                         heroHitPoints -= enemy.AttackPower; // Calculates and apply damage to the hero
 
-                       
+
                         if (heroHitPoints <= 0) // Checks if the hero's hit points are reduced to 0
                         {
                             gameState = GameState.GameOver;
                         }
                     }
+
                 }
+            }
         }
+
 
         //Enemy Spawn Method
         public int NumEnemySpawn()
@@ -311,7 +315,7 @@ namespace GADE6112POE_Part1_v01
             {
                 if (currentLevel.Hero != null)
                 {
-                    return $"{currentLevel.Hero.HitPoints} / {currentLevel.Hero.MaxHitPoints}";
+                   // return $"{currentLevel.Hero.HitPoints} / {currentLevel.Hero.MaxHitPoints}";
                 }
                 return "0/0";
             }
