@@ -13,7 +13,7 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
-        private int HitPoints;
+        private int hitPoints;
         private int MaxHitPoints;
 
         //constructor
@@ -49,10 +49,10 @@ namespace GADE6112POE_Part1_v01
 
         public void Heal(int amount)
         {
-            HitPoints += amount;
-            if (HitPoints > MaxHitPoints)
+            hitPoints += amount;
+            if (hitPoints > MaxHitPoints)
             {
-                HitPoints = MaxHitPoints;
+                hitPoints = MaxHitPoints;
             }
         }
 

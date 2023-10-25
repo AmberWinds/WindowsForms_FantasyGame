@@ -307,19 +307,22 @@ namespace GADE6112POE_Part1_v01
                     enemy.UpdateVision(currentLevel, enemy.Position);
                }
             }
-        }
-
-         public string HeroStats
+         }
+        public string HeroStats
         {
             get
             {
                 if (currentLevel.Hero != null)
                 {
-                   // return $"{currentLevel.Hero.HitPoints} / {currentLevel.Hero.MaxHitPoints}";
+                    int currentHitPoints = currentLevel.Hero.hitPoints;
+                    int maxHitPoints = currentLevel.Hero.maxHitPoints;
+                    return $"{currentHitPoints}/{maxHitPoints}";
                 }
-                return "0/0";
+                return "N/A"; // Handle the case when there is no hero
             }
         }
+
+
 
     }
 }
