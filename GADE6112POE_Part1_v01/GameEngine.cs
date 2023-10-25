@@ -259,28 +259,30 @@ namespace GADE6112POE_Part1_v01
 
          private void MoveEnemies()
         {
-            // Loop through all the enemies
-            foreach (var enemy in currentLevel.Enemies)
+            /// Loop through all the enemies
+          for (int i = 0; i < currentLevel.Enemies.Length; i++)
             {
-                // Skip the enemy if it's dead
-                if (enemy.isDead())
-                {
-                    continue;
-                }
+           EnemyTile enemy = currentLevel.Enemies[i];
 
-                // Check if the enemy has a valid move
-                Tile move;
-                if (enemy.GetMove(out move))
-                {
-                    // Swap the enemy with the target tile
-                    currentLevel.SwapTiles(enemy, move);
+              // Skip the enemy if it's null or dead
+             if (enemy == null || enemy.isDead())
+               {
+                  continue;
+               }
 
-                    // Update vision arrays for both hero and enemy
-                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+               // Check if the enemy has a valid move
+              Tile move;
+              if (enemy.GetMove(out move))
+               {
+                  // Swap the enemy with the target tile
+                   currentLevel.SwapTiles(enemy, move);
+
+                    // Update vision arrays for both the hero and enemy
+                   currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
                     enemy.UpdateVision(currentLevel, enemy.Position);
-                }
+               }
             }
-        }
+       }
 
 
 
