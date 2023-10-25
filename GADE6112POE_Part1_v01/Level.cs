@@ -16,7 +16,6 @@ namespace GADE6112POE_Part1_v01
         private Position heroPosition;
         private ExitTile exit;
         private EnemyTile[] enemies;
-        private GameEngine engine;
 
         //Properties
         public int getWidth { get { return width; } }
@@ -188,18 +187,7 @@ namespace GADE6112POE_Part1_v01
             return buildString.ToString();
         }
 
-        public void UpdateVision()
-        {
-            if(hero != null)
-            {
-                hero.UpdateVision(engine.CurrentLevel, heroPosition);
-            }
-            foreach(var enemy in enemies)
-            {
-                Position enemyUnit = new Position(enemy.positionX, enemy.positionY);                
-                enemy.UpdateVision(engine.CurrentLevel,enemyUnit );
-            }
-        }
+
 
 
     }//end of Level Class

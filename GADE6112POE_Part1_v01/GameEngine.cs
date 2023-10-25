@@ -124,7 +124,7 @@ namespace GADE6112POE_Part1_v01
             }
         }//End Of Move Hero         Commented this to make it easier to see.
 
-        //ATTACK METHODS
+        //HERO ATTACK METHODS
         private bool HeroAttack(Level.Direction attack)
         {
             currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
@@ -141,10 +141,34 @@ namespace GADE6112POE_Part1_v01
             int attackDirec = ToInt(trigAttack);
             if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
             {
+                UpdateVision();
                 HeroAttack(trigAttack);
+                EnemiesAttack();
 
             }
 
+        }
+        //ENEMY ATTACK METHODS
+        private void EnemiesAttack()
+        {     
+            for( int i = 0; i<4; i++) 
+            {
+                if (currentLevel.Enemies[i] is CharacterTile)
+                { 
+                    for( int j = 0; j < 4; j++)
+                    {
+                       if(currentLevel.Enemies[i].GetTargets()[j] is HeroTile)
+                        {
+                            currentLevel.Enemies[i].Attack(currentLevel.Enemies[i].GetTargets()[j]);
+                        }
+                    }
+
+                }
+                else if (currentLevel.Enemies[i] is null)
+                {
+                   
+                }
+            }
         }
 
         //Enemy Spawn Method
@@ -166,7 +190,18 @@ namespace GADE6112POE_Part1_v01
             }
         }
 
-
+        public void UpdateVision()
+        {
+            if (currentLevel.Hero != null)
+            {
+                currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+            }
+            foreach (var enemy in currentLevel.Enemies)
+            {
+                Position enemyUnit = new Position(enemy.positionX, enemy.positionY);
+                enemy.UpdateVision(currentLevel, enemyUnit);
+            }
+        }
 
         //GAME STATE METHODS
         public void NextLevel()

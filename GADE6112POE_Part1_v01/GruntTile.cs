@@ -9,7 +9,6 @@ namespace GADE6112POE_Part1_v01
     internal class GruntTile : EnemyTile
     {
         //Variables
-        GameEngine engine;
         Position gruntPosition;
         //CONSTRUCTOR
         public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1) //Position, Hp, Attack
@@ -27,7 +26,7 @@ namespace GADE6112POE_Part1_v01
         public override bool GetMove(out Tile move)
         {    
             int canMove = 0;
-            UpdateVision(engine.CurrentLevel, gruntPosition);
+            //Level.UpdateVision(gruntPosition);
             for (int i = 0; i <= 3; i++)
             {
                 if (Vision[i] is EmptyTile)
@@ -53,25 +52,16 @@ namespace GADE6112POE_Part1_v01
         public override CharacterTile[] GetTargets()
         {
             CharacterTile[] targets = null;
-            int canTarget = -1;
-            UpdateVision(engine.CurrentLevel, gruntPosition);
+            //UpdateVision(gruntPosition);
             for (int i = 0; i <= 3; i++)
             {
                 if (Vision[i] is HeroTile)
                 {
-                    canTarget = i;
+                    targets = new CharacterTile[4];
+                    targets[i] = (CharacterTile)Vision[i];
                 }
             }
-
-            if (canTarget >= 0)
-            {
-                targets[0] = (CharacterTile)Vision[canTarget];
-                return targets;
-            }
-            else
-            {
-                return targets;
-            }
+            return targets;
 
         }
 

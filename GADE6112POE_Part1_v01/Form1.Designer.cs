@@ -70,11 +70,11 @@
             // 
             lblInstructions.AutoSize = true;
             lblInstructions.Font = new Font("Lucida Bright", 10.2F, FontStyle.Italic, GraphicsUnit.Point);
-            lblInstructions.Location = new Point(569, 173);
+            lblInstructions.Location = new Point(580, 161);
             lblInstructions.Name = "lblInstructions";
-            lblInstructions.Size = new Size(234, 114);
+            lblInstructions.Size = new Size(234, 133);
             lblInstructions.TabIndex = 3;
-            lblInstructions.Text = "Use the Arrow Keys and \r\nMake Your way to The Exit.\r\nWatch Out for Grunts and\r\n See if You Can \r\nBeat All Ten Levels\r\n\r\n";
+            lblInstructions.Text = "Use the Arrow Keys and \r\nMake Your way to The Exit.\r\nWatch Out for Enemies \r\n(Use WASD on them) and\r\n See if You Can \r\nBeat All Ten Levels\r\n\r\n";
             lblInstructions.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
