@@ -19,6 +19,8 @@ namespace GADE6112POE_Part1_v01
         private HeroTile currentHero;
         private int enemySpawn;
         GameState gameState = GameState.InProgress;
+        private int successfulMoves = 0; // Field to count successful moves
+        private int currentLevelNumber = 1; // Added field to track current level number
 
         //constants
         private const int maxSize = 20;
@@ -61,7 +63,16 @@ namespace GADE6112POE_Part1_v01
         //MOVEMENT
         public void TriggerMovement(Level.Direction move)
         {
-            MoveHero(move);
+           if (MoveHero(move))
+            {
+                successfulMoves++;
+
+                // Checks if it's time to move enemies (every 2 successful moves)
+                if (successfulMoves % 2 == 0)
+                {
+                    MoveEnemies();
+                }
+            }
         }
         private bool MoveHero(Level.Direction move)
         {
@@ -244,6 +255,31 @@ namespace GADE6112POE_Part1_v01
                 return "GAME OVER";         //When the Game is lost, Game Over is Displayed
             }
             else { return "Invalid GameState"; }
+        }
+
+         private void MoveEnemies()
+        {
+            // Loop through all the enemies
+            foreach (var enemy in currentLevel.Enemies)
+            {
+                // Skip the enemy if it's dead
+                if (enemy.isDead())
+                {
+                    continue;
+                }
+
+                // Check if the enemy has a valid move
+                Tile move;
+                if (enemy.GetMove(out move))
+                {
+                    // Swap the enemy with the target tile
+                    currentLevel.SwapTiles(enemy, move);
+
+                    // Update vision arrays for both hero and enemy
+                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+                    enemy.UpdateVision(currentLevel, enemy.Position);
+                }
+            }
         }
 
 
