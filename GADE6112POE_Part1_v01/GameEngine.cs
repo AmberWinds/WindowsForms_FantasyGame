@@ -48,7 +48,7 @@ namespace GADE6112POE_Part1_v01
         public int ToInt(Level.Direction direction) //method converts the Direction enum into a number that can be used for the CharacterVision Array
         {
             //Console.WriteLine(direction);         //console output for debugging purposes
-            int dirVision = 4;
+            int dirVision = 6;
             if (direction == Direction.Up) { dirVision = 0; }
             else if (direction == Direction.Right) { dirVision = 1; }
             else if (direction == Direction.Down) { dirVision = 2; }
@@ -123,6 +123,29 @@ namespace GADE6112POE_Part1_v01
                 }
             }
         }//End Of Move Hero         Commented this to make it easier to see.
+
+        //ATTACK METHODS
+        private bool HeroAttack(Level.Direction attack)
+        {
+            currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+            int attackDirec = ToInt(attack);
+            EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
+
+            enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
+            return true;
+        }
+
+        public void TriggerAttack(Level.Direction trigAttack)
+        {
+            currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+            int attackDirec = ToInt(trigAttack);
+            if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
+            {
+                HeroAttack(trigAttack);
+
+            }
+
+        }
 
         //Enemy Spawn Method
         public int NumEnemySpawn()

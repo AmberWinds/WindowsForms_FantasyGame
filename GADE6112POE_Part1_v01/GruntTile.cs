@@ -12,7 +12,7 @@ namespace GADE6112POE_Part1_v01
         GameEngine engine;
         Position gruntPosition;
         //CONSTRUCTOR
-        public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1)
+        public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1) //Position, Hp, Attack
         {
             gruntPosition = gruntUnit;
         }

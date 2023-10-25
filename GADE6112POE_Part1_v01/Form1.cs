@@ -57,6 +57,34 @@ namespace GADE6112POE_Part1_v01
                 UpdateDisplay();
                 return true;
             }
+            if (keyData == Keys.W)                 //calls triggerMovement Method, which allows the player to move.
+            {
+                game.TriggerAttack(Direction.Up);   //Attack Up with W Key
+                UpdateDisplay();                    //After Each Key Press, it will Update the output to the Label.
+                //MessageBox.Show("Press W Key");
+                return true;
+            }
+            if (keyData == Keys.S)
+            {
+                game.TriggerAttack(Direction.Down); //Attack Down with S Key
+                //MessageBox.Show("Press S Key");
+                UpdateDisplay();
+                return true;
+            }
+            if (keyData == Keys.A)
+            {
+                game.TriggerAttack(Direction.Left);   //Attack Left with left A key
+                //MessageBox.Show("Press A Key");
+                UpdateDisplay();
+                return true;
+            }
+            if (keyData == Keys.D)
+            {
+                game.TriggerAttack(Direction.Right);  //Attack Right with Right D Key
+                //MessageBox.Show("Press D Key");
+                UpdateDisplay();
+                return true;
+            }
             UpdateDisplay();
             return base.ProcessCmdKey(ref msg, keyData);
 
@@ -64,6 +92,7 @@ namespace GADE6112POE_Part1_v01
             //OriginalGriff. 2017. How do I move forms with up, down, left & right keys? Solution 1 [Source code].
             //https://www.codeproject.com/Questions/1194396/How-do-I-move-forms-with-up-down-left-right-keys (Accessed 07 September 2023).
         }//end of KeyInput Method
+
 
         private void lbl_Heading_Click(object sender, EventArgs e)
         {
