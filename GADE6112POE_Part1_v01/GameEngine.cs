@@ -17,6 +17,7 @@ namespace GADE6112POE_Part1_v01
         private int height;
         private int levelnumber = 1;
         private HeroTile currentHero;
+        private int enemySpawn;
         GameState gameState = GameState.InProgress;
 
         //constants
@@ -39,7 +40,7 @@ namespace GADE6112POE_Part1_v01
             numberOfLevels = numLevels;
             width = random.Next(minSize, maxSize);        //every Level is Randomized
             height = random.Next(minSize, maxSize);
-            currentLevel = new Level(width, height);
+            currentLevel = new Level(width, height, NumEnemySpawn());
         }
 
 
@@ -121,9 +122,28 @@ namespace GADE6112POE_Part1_v01
                     return false;
                 }
             }
+        }//End Of Move Hero         Commented this to make it easier to see.
 
-
+        //Enemy Spawn Method
+        public int NumEnemySpawn()
+        {
+            switch(levelnumber)
+            {
+                case 1: return 2;
+                case 2: return 3;
+                case 3: return 4;
+                case 4: return 5;
+                case 5: return 5;
+                case 6: return 6;
+                case 7: return 7;
+                case 8: return 8;
+                case 9: return 9;
+                case 10: return 10;
+                default: return 0;
+            }
         }
+
+
 
         //GAME STATE METHODS
         public void NextLevel()
@@ -143,7 +163,7 @@ namespace GADE6112POE_Part1_v01
                     }
                 }
 
-                currentLevel = new Level(width, height, currentHero);        //Creates a new CurrentLevel.
+                currentLevel = new Level(width, height,NumEnemySpawn(), currentHero);        //Creates a new CurrentLevel.
             }
         }
 

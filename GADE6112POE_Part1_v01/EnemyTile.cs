@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
-    abstract class EnemyTile: CharacterTile
+    public abstract class EnemyTile: CharacterTile
     {
         //CONSTRUCTOR
         public EnemyTile(Position enemyUnit, int hitP, int attackPower) : base(enemyUnit, hitP, attackPower)

@@ -29,8 +29,8 @@ namespace GADE6112POE_Part1_v01
         public void UpdateVision(Level vision, Position currentPosition)
         {
             visionArray[0] = vision.Tiles[currentPosition.X-1, currentPosition.Y]; //To Go up we subtract 1 from the Y co-ordinate as Y begins at top of page and counts down , increasing its y value
-            visionArray[1] = vision.Tiles[currentPosition.X+1, currentPosition.Y]; //To Go Right we Add 1 to the X co-ordinate as X begins on the left side of the page and counts up , increasing its x value
-            visionArray[2] = vision.Tiles[currentPosition.X, currentPosition.Y-1]; //To Go Down we Add 1 to the Y co-ordinate as Y begins at top of page and counts down , increasing its y value
+            visionArray[1] = vision.Tiles[currentPosition.X + 1, currentPosition.Y]; //To Go Right we Add 1 to the X co-ordinate as X begins on the left side of the page and counts up , increasing its x value
+            visionArray[2] = vision.Tiles[currentPosition.X, currentPosition.Y - 1]; //To Go Down we Add 1 to the Y co-ordinate as Y begins at top of page and counts down , increasing its y value
             visionArray[3] = vision.Tiles[currentPosition.X, currentPosition.Y + 1]; //To Go Left we subtract 1 from the X co-ordinate as X begins at on the left of page and counts up , increasing its x valuecanMove
         }//end of Update Vision
 

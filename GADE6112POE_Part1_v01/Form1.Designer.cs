@@ -47,11 +47,11 @@
             // lblHeading
             // 
             lblHeading.AutoSize = true;
-            lblHeading.Font = new Font("Microsoft Sans Serif", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            lblHeading.Font = new Font("Gill Sans Ultra Bold", 19.8000011F, FontStyle.Italic, GraphicsUnit.Point);
             lblHeading.ForeColor = Color.DarkSlateGray;
-            lblHeading.Location = new Point(553, 45);
+            lblHeading.Location = new Point(551, 45);
             lblHeading.Name = "lblHeading";
-            lblHeading.Size = new Size(269, 78);
+            lblHeading.Size = new Size(301, 96);
             lblHeading.TabIndex = 1;
             lblHeading.Text = "WELCOME TO \r\nTHE GAME";
             lblHeading.TextAlign = ContentAlignment.MiddleCenter;

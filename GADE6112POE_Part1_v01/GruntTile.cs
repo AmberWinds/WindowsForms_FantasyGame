@@ -9,8 +9,8 @@ namespace GADE6112POE_Part1_v01
     internal class GruntTile : EnemyTile
     {
         //Variables
-        Position gruntPosition;
         GameEngine engine;
+        Position gruntPosition;
         //CONSTRUCTOR
         public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1)
         {

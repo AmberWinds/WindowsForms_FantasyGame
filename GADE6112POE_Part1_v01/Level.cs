@@ -16,6 +16,7 @@ namespace GADE6112POE_Part1_v01
         private Position heroPosition;
         private ExitTile exit;
         private EnemyTile[] enemies;
+        private GameEngine engine;
 
         //Properties
         public int getWidth { get { return width; } }
@@ -24,9 +25,9 @@ namespace GADE6112POE_Part1_v01
         public HeroTile Hero { get { return hero; } }
         public Position HeroPosition { get { return heroPosition; } set { heroPosition = value; } }
         public ExitTile Exit { get { return exit; } }
-        public EnemyTile[] Enemies {get { return enemies; } }
+        public EnemyTile[] Enemies {get { return enemies; } }                   //error Resolved: EnemyTile had to be Public
         //Constructor
-        public Level(int  width, int height, HeroTile heroLevel = null,int numEnemies)
+        public Level(int  width, int height, int numEnemies, HeroTile heroLevel = null) //error Resolved: Optional Parameters must always be Last
         {
             this.width = width;
             this.height = height;
@@ -191,11 +192,12 @@ namespace GADE6112POE_Part1_v01
         {
             if(hero != null)
             {
-                hero.UpdateVision;
+                hero.UpdateVision(engine.CurrentLevel, heroPosition);
             }
             foreach(var enemy in enemies)
             {
-                enemy.UpdateVision;
+                Position enemyUnit = new Position(enemy.positionX, enemy.positionY);                
+                enemy.UpdateVision(engine.CurrentLevel,enemyUnit );
             }
         }
 
