@@ -63,12 +63,17 @@ namespace GADE6112POE_Part1_v01
         //MOVEMENT
         public void TriggerMovement(Level.Direction move)
         {
-           if (MoveHero(move))
+           if (gameState == GameState.GameOver)
+            {
+                return; // Game is over, do nothing
+            }
+
+            if (MoveHero(move))
             {
                 successfulMoves++;
 
-               
-                if (successfulMoves % 2 == 0) // Checks if it's time to move enemies (every 2 successful moves)
+                // Checks if it's time to move enemies (every 2 successful moves)
+                if (successfulMoves % 2 == 0)
                 {
                     MoveEnemies();
                 }
@@ -152,17 +157,23 @@ namespace GADE6112POE_Part1_v01
             int attackDirec = ToInt(trigAttack);
             if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
             {
-                UpdateVision();
-                HeroAttack(trigAttack);
-                EnemiesAttack();
+                if (HeroAttack(trigAttack))
+                {
+                    // After a successful hero attack, trigger enemies' attacks
+                    EnemiesAttack();
 
+                    // Check if the hero is dead
+                    if (currentLevel.Hero.isDead())
+                    {
+                        gameState = GameState.GameOver;
+                    }
+                }
             }
 
         }
         //ENEMY ATTACK METHODS
         private void EnemiesAttack()
         {     
-            
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
                 EnemyTile enemy = currentLevel.Enemies[i];
@@ -261,8 +272,8 @@ namespace GADE6112POE_Part1_v01
                 return currentLevel.ToString();         //when game is not finished, the next level will be Displayed
             }
             else if (gameState == GameState.GameOver)
-            {
-                return "GAME OVER";         //When the Game is lost, Game Over is Displayed
+            { 
+                return "Game Over!"; // Display "Game Over!" message
             }
             else { return "Invalid GameState"; }
         }
@@ -292,7 +303,19 @@ namespace GADE6112POE_Part1_v01
                     enemy.UpdateVision(currentLevel, enemy.Position);
                }
             }
-       }
+        }
+
+         public string HeroStats
+        {
+            get
+            {
+                if (currentLevel.Hero != null)
+                {
+                    return $"{currentLevel.Hero.HitPoints} / {currentLevel.Hero.MaxHitPoints}";
+                }
+                return "0/0";
+            }
+        }
 
     }
 }
