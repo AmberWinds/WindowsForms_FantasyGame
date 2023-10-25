@@ -67,8 +67,8 @@ namespace GADE6112POE_Part1_v01
             {
                 successfulMoves++;
 
-                // Checks if it's time to move enemies (every 2 successful moves)
-                if (successfulMoves % 2 == 0)
+               
+                if (successfulMoves % 2 == 0) // Checks if it's time to move enemies (every 2 successful moves)
                 {
                     MoveEnemies();
                 }
@@ -162,24 +162,34 @@ namespace GADE6112POE_Part1_v01
         //ENEMY ATTACK METHODS
         private void EnemiesAttack()
         {     
-            for( int i = 0; i<4; i++) 
+            
+            for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
-                if (currentLevel.Enemies[i] is CharacterTile)
-                { 
-                    for( int j = 0; j < 4; j++)
+                EnemyTile enemy = currentLevel.Enemies[i];
+
+               
+                if (enemy == null || enemy.isDead()) // Skips the enemy if it's null or dead
+                {
+                    continue;
+                }
+
+             
+                CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
+
+                foreach (CharacterTile target in targets)
+                {
+                    if (target is HeroTile)
                     {
-                       if(currentLevel.Enemies[i].GetTargets()[j] is HeroTile)
+                       
+                        heroHitPoints -= enemy.AttackPower; // Calculates and apply damage to the hero
+
+                       
+                        if (heroHitPoints <= 0) // Checks if the hero's hit points are reduced to 0
                         {
-                            currentLevel.Enemies[i].Attack(currentLevel.Enemies[i].GetTargets()[j]);
+                            gameState = GameState.GameOver;
                         }
                     }
-
                 }
-                else if (currentLevel.Enemies[i] is null)
-                {
-                   
-                }
-            }
         }
 
         //Enemy Spawn Method
@@ -259,32 +269,30 @@ namespace GADE6112POE_Part1_v01
 
          private void MoveEnemies()
         {
-            /// Loop through all the enemies
-          for (int i = 0; i < currentLevel.Enemies.Length; i++)
+           
+          for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
            EnemyTile enemy = currentLevel.Enemies[i];
 
-              // Skip the enemy if it's null or dead
-             if (enemy == null || enemy.isDead())
+              
+             if (enemy == null || enemy.isDead())// Skip the enemy if it's null or dead
                {
                   continue;
                }
 
-               // Check if the enemy has a valid move
-              Tile move;
+               
+              Tile move;// Check if the enemy has a valid move
               if (enemy.GetMove(out move))
                {
-                  // Swap the enemy with the target tile
-                   currentLevel.SwapTiles(enemy, move);
+                 
+                   currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
 
-                    // Update vision arrays for both the hero and enemy
-                   currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+                   
+                   currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition); // Update vision arrays for both the hero and enemy
                     enemy.UpdateVision(currentLevel, enemy.Position);
                }
             }
        }
-
-
 
     }
 }
