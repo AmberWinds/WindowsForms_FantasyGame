@@ -13,7 +13,6 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
-        private int hitPoints;
         private int MaxHitPoints;
 
         //constructor

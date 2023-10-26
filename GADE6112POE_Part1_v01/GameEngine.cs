@@ -282,46 +282,33 @@ namespace GADE6112POE_Part1_v01
             else { return "Invalid GameState"; }
         }
 
-         private void MoveEnemies()
+        private void MoveEnemies()
         {
-           
-          for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
+
+            for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
-           EnemyTile enemy = currentLevel.Enemies[i];
+                EnemyTile enemy = currentLevel.Enemies[i];
 
-              
-             if (enemy == null || enemy.isDead())// Skip the enemy if it's null or dead
-               {
-                  continue;
-               }
 
-               
-              Tile move;// Check if the enemy has a valid move
-              if (enemy.GetMove(out move))
-               {
-                 
-                   currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
-
-                   
-                   currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition); // Update vision arrays for both the hero and enemy
-                    enemy.UpdateVision(currentLevel, enemy.Position);
-               }
-            }
-         }
-        public string HeroStats
-        {
-            get
-            {
-                if (currentLevel.Hero != null)
+                if (enemy == null || enemy.isDead())// Skip the enemy if it's null or dead
                 {
-                    int currentHitPoints = currentLevel.Hero.hitPoints;
-                    int maxHitPoints = currentLevel.Hero.maxHitPoints;
-                    return $"{currentHitPoints}/{maxHitPoints}";
+                    continue;
                 }
-                return "N/A"; // Handle the case when there is no hero
-            }
-        }
 
+
+                Tile move;// Check if the enemy has a valid move
+                if (enemy.GetMove(out move))
+                {
+
+                    currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
+
+
+                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition); // Update vision arrays for both the hero and enemy
+                    enemy.UpdateVision(currentLevel, enemy.Position);
+                }
+            }
+
+        }
 
 
     }
