@@ -309,6 +309,19 @@ namespace GADE6112POE_Part1_v01
             }
 
         }
+        public string HeroStats
+        {
+            get
+            {
+                if (currentLevel.Hero != null)
+                {
+                    int currentHitPoints = currentLevel.Hero.HitPoints;
+                    int maxHitPoints = currentLevel.Hero.maxHitPoints;
+                    return $"{currentHitPoints}/{maxHitPoints}";
+                }
+                return "N/A"; // Handle the case when there is no hero
+            }
+        }
 
 
     }
