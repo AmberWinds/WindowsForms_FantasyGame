@@ -10,6 +10,7 @@ namespace GADE6112POE_Part1_v01
             InitializeComponent();
             game = new GameEngine(10);
             UpdateDisplay();
+            UpdateHealth();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -23,6 +24,11 @@ namespace GADE6112POE_Part1_v01
             lblDisplay.Text = game.ToString();     //Displays the Game in the Label
         }
 
+        public void UpdateHealth()
+        {
+            lblHeroHealth.Text = "Health: " + game.CurrentLevel.Hero.HitPoints;
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) //override bool ProcessCMDKey to get Key input.
         {
             //capture up arrow key
@@ -30,6 +36,7 @@ namespace GADE6112POE_Part1_v01
             {
                 game.TriggerMovement(Direction.Up); //Move Up with UP arrowKey
                 UpdateDisplay();                    //After Each Key Press, it will Update the output to the Label.
+                UpdateHealth();
                 //MessageBox.Show("Press Up Key");
                 return true;
             }
@@ -39,6 +46,7 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerMovement(Direction.Down); //Move Down with down Arrow Key
                 //MessageBox.Show("Press Down Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             //capture left arrow key
@@ -47,6 +55,7 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerMovement(Direction.Left);   //Move Left with left Arrow key
                 //MessageBox.Show("Press Left Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             //capture right arrow key
@@ -55,11 +64,13 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerMovement(Direction.Right);  //Move Right with Right Arrow Key
                 //MessageBox.Show("Press Right Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             if (keyData == Keys.W)                 //calls triggerMovement Method, which allows the player to move.
             {
                 game.TriggerAttack(Direction.Up);   //Attack Up with W Key
+                UpdateHealth();
                 UpdateDisplay();                    //After Each Key Press, it will Update the output to the Label.
                 //MessageBox.Show("Press W Key");
                 return true;
@@ -69,6 +80,7 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerAttack(Direction.Down); //Attack Down with S Key
                 //MessageBox.Show("Press S Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             if (keyData == Keys.A)
@@ -76,6 +88,7 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerAttack(Direction.Left);   //Attack Left with left A key
                 //MessageBox.Show("Press A Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             if (keyData == Keys.D)
@@ -83,9 +96,11 @@ namespace GADE6112POE_Part1_v01
                 game.TriggerAttack(Direction.Right);  //Attack Right with Right D Key
                 //MessageBox.Show("Press D Key");
                 UpdateDisplay();
+                UpdateHealth();
                 return true;
             }
             UpdateDisplay();
+            UpdateHealth();
             return base.ProcessCmdKey(ref msg, keyData);
 
             //Above code has been altered from OriginalGriff(2017)'s original code in order to implement the above Program.
@@ -104,5 +119,9 @@ namespace GADE6112POE_Part1_v01
 
         }
 
+        private void lblHeroHealth_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

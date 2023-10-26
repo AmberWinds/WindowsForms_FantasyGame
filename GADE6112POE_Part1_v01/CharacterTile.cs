@@ -66,5 +66,7 @@ namespace GADE6112POE_Part1_v01
         {
             if (hitPoints <= 0) { return true; } else { return false; } //Hp is 0 or less, character is dead and unable to continue playing.
         }//end of isDead
+
+
     }
 }

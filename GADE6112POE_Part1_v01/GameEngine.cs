@@ -21,7 +21,7 @@ namespace GADE6112POE_Part1_v01
         GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
         private int currentLevelNumber = 1; // Added field to track current level number
-        private int heroHitPoints;
+
 
         //constants
         private const int maxSize = 20;
@@ -176,20 +176,19 @@ namespace GADE6112POE_Part1_v01
         private void EnemiesAttack()
         {
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
-            {
+            {;
                 EnemyTile enemy = currentLevel.Enemies[i];
-
 
                 if (enemy == null || enemy.isDead()) // Skips the enemy if it's null or dead
                 {
                     continue;
                 }
-
+                //currentLevel.Enemies[i].UpdateVision(currentLevel, currentLevel.Enemies[i].Position);
 
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
                 {
-
+                    Console.WriteLine("targets is Null");
                 }
                 else
                 {
@@ -197,11 +196,9 @@ namespace GADE6112POE_Part1_v01
                     {
                         if (target is HeroTile)
                         {
+                            currentLevel.Hero.TakeDamage(currentLevel.Enemies[i].AttackPower); // Calculates and apply damage to the hero
 
-                            heroHitPoints -= enemy.AttackPower; // Calculates and apply damage to the hero
-
-
-                            if (heroHitPoints <= 0) // Checks if the hero's hit points are reduced to 0
+                            if (currentLevel.Hero.HitPoints <= 0) // Checks if the hero's hit points are reduced to 0
                             {
                                 gameState = GameState.GameOver;
                             }

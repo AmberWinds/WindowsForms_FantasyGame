@@ -40,7 +40,7 @@ namespace GADE6112POE_Part1_v01
             {
                 Position enemyPosition = GetRandomEmptyPosition();
                 enemies[i] = (EnemyTile)CreateTile(TileType.Enemy, enemyPosition);
-                tiles[enemyPosition.X,enemyPosition.Y] = enemies[i];                                                                                                                                                                                                                                                                                
+                tiles[enemyPosition.X,enemyPosition.Y] = enemies[i];
             }
 
             //Q4.3
@@ -186,9 +186,6 @@ namespace GADE6112POE_Part1_v01
             }
             return buildString.ToString();
         }
-
-
-
 
     }//end of Level Class
 }

@@ -33,6 +33,8 @@
             lblBorder = new Label();
             lblInstructions = new Label();
             label1 = new Label();
+            lblHeroHealth = new Label();
+            lblAttackStat = new Label();
             SuspendLayout();
             // 
             // lblDisplay
@@ -40,7 +42,7 @@
             lblDisplay.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point);
             lblDisplay.Location = new Point(54, 45);
             lblDisplay.Name = "lblDisplay";
-            lblDisplay.Size = new Size(436, 544);
+            lblDisplay.Size = new Size(436, 538);
             lblDisplay.TabIndex = 0;
             lblDisplay.Text = "Display Level Here";
             // 
@@ -60,7 +62,7 @@
             // 
             lblBorder.AutoSize = true;
             lblBorder.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblBorder.Location = new Point(509, 9);
+            lblBorder.Location = new Point(496, 19);
             lblBorder.Name = "lblBorder";
             lblBorder.Size = new Size(17, 616);
             lblBorder.TabIndex = 2;
@@ -70,7 +72,7 @@
             // 
             lblInstructions.AutoSize = true;
             lblInstructions.Font = new Font("Lucida Bright", 10.2F, FontStyle.Italic, GraphicsUnit.Point);
-            lblInstructions.Location = new Point(580, 161);
+            lblInstructions.Location = new Point(582, 150);
             lblInstructions.Name = "lblInstructions";
             lblInstructions.Size = new Size(234, 133);
             lblInstructions.TabIndex = 3;
@@ -83,18 +85,41 @@
             label1.BackColor = Color.PowderBlue;
             label1.Font = new Font("Lucida Bright", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(610, 314);
+            label1.Location = new Point(623, 330);
             label1.Name = "label1";
             label1.Size = new Size(161, 168);
             label1.TabIndex = 4;
             label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n\r\n\r\n";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // lblHeroHealth
+            // 
+            lblHeroHealth.AutoSize = true;
+            lblHeroHealth.Font = new Font("Palatino Linotype", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblHeroHealth.Location = new Point(54, 611);
+            lblHeroHealth.Name = "lblHeroHealth";
+            lblHeroHealth.Size = new Size(73, 24);
+            lblHeroHealth.TabIndex = 5;
+            lblHeroHealth.Text = "Health:";
+            lblHeroHealth.Click += lblHeroHealth_Click;
+            // 
+            // lblAttackStat
+            // 
+            lblAttackStat.AutoSize = true;
+            lblAttackStat.Font = new Font("Palatino Linotype", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
+            lblAttackStat.Location = new Point(54, 644);
+            lblAttackStat.Name = "lblAttackStat";
+            lblAttackStat.Size = new Size(83, 24);
+            lblAttackStat.TabIndex = 6;
+            lblAttackStat.Text = "Attack: 5";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(864, 636);
+            ClientSize = new Size(860, 686);
+            Controls.Add(lblAttackStat);
+            Controls.Add(lblHeroHealth);
             Controls.Add(label1);
             Controls.Add(lblInstructions);
             Controls.Add(lblBorder);
@@ -114,5 +139,7 @@
         private Label lblBorder;
         private Label lblInstructions;
         private Label label1;
+        private Label lblHeroHealth;
+        private Label lblAttackStat;
     }
 }

@@ -33,9 +33,7 @@ namespace GADE6112POE_Part1_v01
                     canMove += 1;
                 }
             }
-
             int randomMove = new Random().Next(0, canMove);
-
             if (canMove > 0)
             {
                 move = Vision[randomMove];
@@ -46,6 +44,7 @@ namespace GADE6112POE_Part1_v01
                 move = null;
                 return false;
             }
+
         }
 
         public override CharacterTile[] GetTargets()
@@ -60,11 +59,10 @@ namespace GADE6112POE_Part1_v01
                 }
                 else
                 {
-                    return null;
+                    continue;
                 }
             }
-            return null;
-
+            return targets;
         }
 
 
