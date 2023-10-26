@@ -8,6 +8,7 @@ namespace GADE6112POE_Part1_v01
 {
     public class HeroTile : CharacterTile
     {
+        internal int HitPoints;
         Position heroPlace;
         public HeroTile(Position heroPosition) : base(heroPosition, 40, 5)
         {
