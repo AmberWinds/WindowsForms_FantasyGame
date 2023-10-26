@@ -18,9 +18,9 @@ namespace GADE6112POE_Part1_v01
             target.Heal(10);
         }
 
-        public override string Display // please help with this error
+        public override char Display // please help with this error
         {
-            get { return "+"; }
+            get { return '+'; }
         }
     }
 }

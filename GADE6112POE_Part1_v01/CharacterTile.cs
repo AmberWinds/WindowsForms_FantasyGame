@@ -13,7 +13,6 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
-        private int hitPoints;
         private int MaxHitPoints;
 
         //constructor
@@ -27,6 +26,7 @@ namespace GADE6112POE_Part1_v01
         //PROPERTIES
         public Tile[] Vision { get { return visionArray; } set { visionArray = value; } }
         public int AttackPower { get {  return attackPower; }  }
+        public int HitPoints { get { return hitPoints; } set {  hitPoints = value; } }
 
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)

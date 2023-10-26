@@ -25,8 +25,7 @@ namespace GADE6112POE_Part1_v01
         //ABSTRACT MEMBER OVERRIDES
         public override bool GetMove(out Tile move)
         {    
-            int canMove = 0;
-            //Level.UpdateVision(gruntPosition);
+            int canMove = 0;           
             for (int i = 0; i <= 3; i++)
             {
                 if (Vision[i] is EmptyTile)
@@ -51,17 +50,20 @@ namespace GADE6112POE_Part1_v01
 
         public override CharacterTile[] GetTargets()
         {
-            CharacterTile[] targets = null;
-            //UpdateVision(gruntPosition);
+            CharacterTile[] targets = new CharacterTile[4];
             for (int i = 0; i <= 3; i++)
             {
                 if (Vision[i] is HeroTile)
                 {
-                    targets = new CharacterTile[4];
                     targets[i] = (CharacterTile)Vision[i];
+                    return targets;
+                }
+                else
+                {
+                    return null;
                 }
             }
-            return targets;
+            return null;
 
         }
 

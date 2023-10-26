@@ -187,24 +187,31 @@ namespace GADE6112POE_Part1_v01
 
 
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
-
-                foreach (CharacterTile target in targets)
+                if (targets == null)
                 {
-                    if (target is HeroTile)
-                    {
-
-                        heroHitPoints -= enemy.AttackPower; // Calculates and apply damage to the hero
-
-
-                        if (heroHitPoints <= 0) // Checks if the hero's hit points are reduced to 0
-                        {
-                            gameState = GameState.GameOver;
-                        }
-                    }
 
                 }
-            }
-        }
+                else
+                {
+                    foreach (CharacterTile target in targets)
+                    {
+                        if (target is HeroTile)
+                        {
+
+                            heroHitPoints -= enemy.AttackPower; // Calculates and apply damage to the hero
+
+
+                            if (heroHitPoints <= 0) // Checks if the hero's hit points are reduced to 0
+                            {
+                                gameState = GameState.GameOver;
+                            }
+                        }
+
+                    }
+                }
+
+            } //endfor
+        } //end of Enemies Attack
 
 
         //Enemy Spawn Method
@@ -314,7 +321,7 @@ namespace GADE6112POE_Part1_v01
             {
                 if (currentLevel.Hero != null)
                 {
-                    int currentHitPoints = currentLevel.Hero.hitPoints;
+                    int currentHitPoints = currentLevel.Hero.HitPoints;
                     int maxHitPoints = currentLevel.Hero.maxHitPoints;
                     return $"{currentHitPoints}/{maxHitPoints}";
                 }
