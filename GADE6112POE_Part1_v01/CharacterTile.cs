@@ -13,7 +13,6 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
-        private int MaxHitPoints;
 
         //constructor
         public CharacterTile(Position pos, int hP, int atkPower) : base(pos)
@@ -27,7 +26,7 @@ namespace GADE6112POE_Part1_v01
         public Tile[] Vision { get { return visionArray; } set { visionArray = value; } }
         public int AttackPower { get {  return attackPower; }  }
         public int HitPoints { get { return hitPoints; } set {  hitPoints = value; } }
-
+        public int MaxHP {  get { return maxHP; } }
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)
         {
@@ -50,9 +49,9 @@ namespace GADE6112POE_Part1_v01
         public void Heal(int amount)
         {
             hitPoints += amount;
-            if (hitPoints > MaxHitPoints)
+            if (hitPoints > maxHP)
             {
-                hitPoints = MaxHitPoints;
+                hitPoints = maxHP;
             }
         }
 

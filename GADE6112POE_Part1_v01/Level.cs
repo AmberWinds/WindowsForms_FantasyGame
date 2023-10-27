@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GADE6112POE_Part1_v01.GADE6112POE_Part1_v01;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace GADE6112POE_Part1_v01
         private Position heroPosition;
         private ExitTile exit;
         private EnemyTile[] enemies;
+        private PickupTile[] pickupTiles;
 
         //Properties
         public int getWidth { get { return width; } }
@@ -24,9 +26,10 @@ namespace GADE6112POE_Part1_v01
         public HeroTile Hero { get { return hero; } }
         public Position HeroPosition { get { return heroPosition; } set { heroPosition = value; } }
         public ExitTile Exit { get { return exit; } }
+        public PickupTile[] PickupTiles { get { return pickupTiles; } }  
         public EnemyTile[] Enemies {get { return enemies; } }                   //error Resolved: EnemyTile had to be Public
         //Constructor
-        public Level(int  width, int height, int numEnemies, HeroTile heroLevel = null) //error Resolved: Optional Parameters must always be Last
+        public Level(int  width, int height, int numEnemies, int numPickUps, HeroTile heroLevel = null) //error Resolved: Optional Parameters must always be Last
         {
             this.width = width;
             this.height = height;
@@ -41,6 +44,14 @@ namespace GADE6112POE_Part1_v01
                 Position enemyPosition = GetRandomEmptyPosition();
                 enemies[i] = (EnemyTile)CreateTile(TileType.Enemy, enemyPosition);
                 tiles[enemyPosition.X,enemyPosition.Y] = enemies[i];
+            }
+
+            pickupTiles = new PickupTile[numPickUps];
+            for (int i = 0; i < numPickUps; i++)
+            {
+                Position pickUpPosition = GetRandomEmptyPosition();
+                pickupTiles[i] = (HealthPickupTile)CreateTile(TileType.PickUp, pickUpPosition);
+                tiles[pickUpPosition.X, pickUpPosition.Y] = pickupTiles[i];
             }
 
             //Q4.3
@@ -72,6 +83,7 @@ namespace GADE6112POE_Part1_v01
             Hero,
             Exit,
             Enemy,  // Added Enemy here
+            PickUp,
         }
         public enum Direction       //Direction enum, used when a players inputs a direction key to Move.
         {
@@ -100,6 +112,8 @@ namespace GADE6112POE_Part1_v01
                     return new EmptyTile(position);
                 case TileType.Enemy:  // this case is for creating GruntTile
                     return new GruntTile(position);
+                case TileType.PickUp:
+                    return new HealthPickupTile(position);
             }
         }//end of Method
 

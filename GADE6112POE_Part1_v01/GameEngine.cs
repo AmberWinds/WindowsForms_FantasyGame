@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -21,7 +22,7 @@ namespace GADE6112POE_Part1_v01
         GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
         private int currentLevelNumber = 1; // Added field to track current level number
-
+        private int numPickUp = 1;
 
         //constants
         private const int maxSize = 20;
@@ -43,7 +44,8 @@ namespace GADE6112POE_Part1_v01
             numberOfLevels = numLevels;
             width = random.Next(minSize, maxSize);        //every Level is Randomized
             height = random.Next(minSize, maxSize);
-            currentLevel = new Level(width, height, NumEnemySpawn());
+            currentLevel = new Level(width, height, NumEnemySpawn(),numPickUp);
+            //heroStats = currentLevel.Hero.HitPoints;
         }
 
 
@@ -64,7 +66,7 @@ namespace GADE6112POE_Part1_v01
         //MOVEMENT
         public void TriggerMovement(Level.Direction move)
         {
-           if (gameState == GameState.GameOver)
+           if (gameState == GameState.GameOver || gameState == GameState.Complete)
             {
                 return; // Game is over, do nothing
             }
@@ -114,6 +116,14 @@ namespace GADE6112POE_Part1_v01
             Console.WriteLine("(MoveHero)Hero Position from heroTile: "+ heroTile.positionX+" "+ heroTile.positionY);
             Console.WriteLine("(MoveHero)TargetPosition from targetTile: " + targetTile.positionX + " " + targetTile.positionY);
 
+            if (targetTile is HealthPickupTile)
+            {
+                currentLevel.Hero.Heal(5);
+                targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
+                currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
+
+            }
+
             if (targetTile is ExitTile)
             {
                 if (levelnumber == numberOfLevels)
@@ -139,6 +149,11 @@ namespace GADE6112POE_Part1_v01
                     return false;
                 }
             }
+
+            
+
+
+
         }//End Of Move Hero         Commented this to make it easier to see.
 
         //HERO ATTACK METHODS
@@ -154,6 +169,11 @@ namespace GADE6112POE_Part1_v01
 
         public void TriggerAttack(Level.Direction trigAttack)
         {
+            if( gameState == GameState.Complete || gameState == GameState.GameOver)
+            {
+                return; //Game is over
+            }
+
             currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
             int attackDirec = ToInt(trigAttack);
             if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
@@ -261,7 +281,7 @@ namespace GADE6112POE_Part1_v01
                     }
                 }
 
-                currentLevel = new Level(width, height,NumEnemySpawn(), currentHero);        //Creates a new CurrentLevel.
+                currentLevel = new Level(width, height,NumEnemySpawn(), numPickUp, currentHero);        //Creates a new CurrentLevel.
             }
         }
 
@@ -320,7 +340,7 @@ namespace GADE6112POE_Part1_v01
                 if (currentLevel.Hero != null)
                 {
                     int currentHitPoints = currentLevel.Hero.HitPoints;
-                    int maxHitPoints = currentLevel.Hero.maxHitPoints;
+                    int maxHitPoints = currentLevel.Hero.MaxHP;
                     return $"{currentHitPoints}/{maxHitPoints}";
                 }
                 return "N/A"; // Handle the case when there is no hero
