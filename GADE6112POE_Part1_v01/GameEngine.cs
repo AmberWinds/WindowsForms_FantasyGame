@@ -199,9 +199,8 @@ namespace GADE6112POE_Part1_v01
                 return; //Game is over
             }
 
-            currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+            UpdateVision();
             int attackDirec = ToInt(trigAttack);
-
 
             if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
             {
@@ -225,11 +224,11 @@ namespace GADE6112POE_Part1_v01
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {;
                 EnemyTile enemy = currentLevel.Enemies[i];
-
                 if (enemy == null || enemy.isDead()) // Skips the enemy if it's null or dead
                 {
                     continue;
                 }
+
 
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
@@ -242,7 +241,7 @@ namespace GADE6112POE_Part1_v01
                     {
                         if (target is HeroTile)
                         {
-                            currentLevel.Hero.TakeDamage(currentLevel.Enemies[i].AttackPower); // Calculates and apply damage to the hero
+                            enemy.Attack(target); // Calculates and apply damage to the hero
 
                             if (currentLevel.Hero.HitPoints <= 0) // Checks if the hero's hit points are reduced to 0
                             {
@@ -281,14 +280,13 @@ namespace GADE6112POE_Part1_v01
             if (currentLevel.Hero != null)
             {
                 currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
-                Console.WriteLine("UpdateVision(); positionx and Y of HeroPosition: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
+               
             }
             for(int i = 0; i < currentLevel.Enemies.Length; i++)
             {
                 EnemyTile enemy;
                 enemy = currentLevel.Enemies[i];
                 Position enemyUnit = new Position(enemy.positionX, enemy.positionY);
-                Console.WriteLine("UpdateVision(); positionx and Y of enemyUnit: " + enemyUnit.X + " " + enemyUnit.Y);
                 enemy.UpdateVision(currentLevel, enemyUnit);
             }
         }

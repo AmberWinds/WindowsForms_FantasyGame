@@ -43,12 +43,12 @@ namespace GADE6112POE_Part1_v01
 
         public override CharacterTile[] GetTargets()
         {
-            CharacterTile[] targets = new CharacterTile[4];
+            CharacterTile[] targets = new CharacterTile[1];
             for (int i = 0; i <= 3; i++)
             {
                 if (Vision[i] is HeroTile)
                 {
-                    targets[i] = (CharacterTile)Vision[i];
+                    targets[0] = (CharacterTile)Vision[i];
                     return targets;
                 }
                 else
