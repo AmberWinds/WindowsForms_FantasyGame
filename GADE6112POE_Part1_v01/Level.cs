@@ -26,8 +26,10 @@ namespace GADE6112POE_Part1_v01
         public HeroTile Hero { get { return hero; } }
         public Position HeroPosition { get { return heroPosition; } set { heroPosition = value; } }
         public ExitTile Exit { get { return exit; } }
-        public PickupTile[] PickupTiles { get { return pickupTiles; } }  
-        public EnemyTile[] Enemies {get { return enemies; } }                   //error Resolved: EnemyTile had to be Public
+        public PickupTile[] PickupTiles { get { return pickupTiles; } }
+        public EnemyTile[] Enemies { get { return enemies; } }                   //error Resolved: EnemyTile had to be Public
+
+
         //Constructor
         public Level(int  width, int height, int numEnemies, int numPickUps, HeroTile heroLevel = null) //error Resolved: Optional Parameters must always be Last
         {

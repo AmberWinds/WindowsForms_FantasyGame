@@ -26,7 +26,7 @@ namespace GADE6112POE_Part1_v01
 
         public void UpdateHealth()
         {
-            lblHeroHealth.Text = "Health: " + game.HeroStats ;
+            lblHeroHealth.Text = "Health: " + game.HeroStats;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) //override bool ProcessCMDKey to get Key input.
@@ -120,6 +120,11 @@ namespace GADE6112POE_Part1_v01
         }
 
         private void lblHeroHealth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDisplay_Click(object sender, EventArgs e)
         {
 
         }

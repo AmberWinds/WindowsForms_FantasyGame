@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -18,6 +19,7 @@ namespace GADE6112POE_Part1_v01
         private int height;
         private int levelnumber = 1;
         private HeroTile currentHero;
+        private Position heroStand;
         private int enemySpawn;
         GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
@@ -52,7 +54,7 @@ namespace GADE6112POE_Part1_v01
         //Method that converts the Enum into a Number
         public int ToInt(Level.Direction direction) //method converts the Direction enum into a number that can be used for the CharacterVision Array
         {
-            //Console.WriteLine(direction);         //console output for debugging purposes
+            //Console.WriteLine("Direction"+ direction);         //console output for debugging purposes
             int dirVision = 6;
             if (direction == Direction.Up) { dirVision = 0; }
             else if (direction == Direction.Right) { dirVision = 1; }
@@ -63,28 +65,28 @@ namespace GADE6112POE_Part1_v01
             return dirVision;       //returns the int value
         }
 
-        //MOVEMENT
+        //MOVEMENT METHODS
         public void TriggerMovement(Level.Direction move)
         {
+           UpdateVision();
            if (gameState == GameState.GameOver || gameState == GameState.Complete)
-            {
+           {
                 return; // Game is over, do nothing
-            }
+           }
 
-            if (MoveHero(move))
+            MoveHero(move);
+
+        // Checks if it's time to move enemies (every 2 successful moves)
+            if (successfulMoves >= 2 )
             {
-                successfulMoves++;
-
-                // Checks if it's time to move enemies (every 2 successful moves)
-                if (successfulMoves % 2 == 0)
-                {
-                    MoveEnemies();
-                }
+                MoveEnemies();
+                successfulMoves = 0;
             }
+            
         }
         private bool MoveHero(Level.Direction move)
         {
-            Position heroStand = currentLevel.HeroPosition;
+            heroStand = currentLevel.HeroPosition;
             Tile heroTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y];
             Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             Tile targetTile;
@@ -112,8 +114,8 @@ namespace GADE6112POE_Part1_v01
             targetTile = currentLevel.Tiles[targetPosition.X, targetPosition.Y];
 
             //Testing
-            Console.WriteLine("\n"+ move);
-            Console.WriteLine("(MoveHero)Hero Position from heroTile: "+ heroTile.positionX+" "+ heroTile.positionY);
+            Console.WriteLine("\n" + move);
+            Console.WriteLine("(MoveHero)Hero Position from heroTile: " + heroTile.positionX + " " + heroTile.positionY);
             Console.WriteLine("(MoveHero)TargetPosition from targetTile: " + targetTile.positionX + " " + targetTile.positionY);
 
             if (targetTile is HealthPickupTile)
@@ -142,6 +144,7 @@ namespace GADE6112POE_Part1_v01
                 {
                     currentLevel.SwapTiles(heroTile, targetTile);
                     currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+                    successfulMoves++;
                     return true;
                 }
                 else
@@ -150,18 +153,40 @@ namespace GADE6112POE_Part1_v01
                 }
             }
 
-            
+        }//End Of Move Hero         Commented this to make it easier to see where methods begin and end
 
+        private void MoveEnemies()
+        {
 
+            for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
+            {
+                EnemyTile enemy = currentLevel.Enemies[i];
 
-        }//End Of Move Hero         Commented this to make it easier to see.
+                if (enemy == null || enemy.isDead() == true)// Skip the enemy if it's null or dead
+                {
+                    continue;
+                }
+
+                Tile move;// Check if the enemy has a valid move
+                if (enemy.GetMove(out move))
+                {
+                    if (move is EmptyTile)
+                    {
+                        currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
+                    }
+
+                }
+            }
+
+        }
 
         //HERO ATTACK METHODS
         private bool HeroAttack(Level.Direction attack)
         {
-            currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+            currentLevel.Hero.UpdateVision(currentLevel, heroStand);
             int attackDirec = ToInt(attack);
             EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
+            Console.WriteLine("HeroAttack Attack Direc: "+ attackDirec+ "Direction: "+ attack);
 
             enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
             return true;
@@ -176,6 +201,8 @@ namespace GADE6112POE_Part1_v01
 
             currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
             int attackDirec = ToInt(trigAttack);
+
+
             if (currentLevel.Hero.Vision[attackDirec] is CharacterTile)
             {
                 if (HeroAttack(trigAttack))
@@ -190,8 +217,8 @@ namespace GADE6112POE_Part1_v01
                     }
                 }
             }
-
         }
+
         //ENEMY ATTACK METHODS
         private void EnemiesAttack()
         {
@@ -203,7 +230,6 @@ namespace GADE6112POE_Part1_v01
                 {
                     continue;
                 }
-                //currentLevel.Enemies[i].UpdateVision(currentLevel, currentLevel.Enemies[i].Position);
 
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
@@ -255,10 +281,14 @@ namespace GADE6112POE_Part1_v01
             if (currentLevel.Hero != null)
             {
                 currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+                Console.WriteLine("UpdateVision(); positionx and Y of HeroPosition: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             }
-            foreach (var enemy in currentLevel.Enemies)
+            for(int i = 0; i < currentLevel.Enemies.Length; i++)
             {
+                EnemyTile enemy;
+                enemy = currentLevel.Enemies[i];
                 Position enemyUnit = new Position(enemy.positionX, enemy.positionY);
+                Console.WriteLine("UpdateVision(); positionx and Y of enemyUnit: " + enemyUnit.X + " " + enemyUnit.Y);
                 enemy.UpdateVision(currentLevel, enemyUnit);
             }
         }
@@ -306,33 +336,7 @@ namespace GADE6112POE_Part1_v01
             else { return "Invalid GameState"; }
         }
 
-        private void MoveEnemies()
-        {
 
-            for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
-            {
-                EnemyTile enemy = currentLevel.Enemies[i];
-
-
-                if (enemy == null || enemy.isDead())// Skip the enemy if it's null or dead
-                {
-                    continue;
-                }
-
-
-                Tile move;// Check if the enemy has a valid move
-                if (enemy.GetMove(out move))
-                {
-
-                    currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
-
-
-                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition); // Update vision arrays for both the hero and enemy
-                    enemy.UpdateVision(currentLevel, enemy.Position);
-                }
-            }
-
-        }
         public string HeroStats
         {
             get

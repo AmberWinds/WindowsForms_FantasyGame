@@ -45,6 +45,7 @@
             lblDisplay.Size = new Size(436, 538);
             lblDisplay.TabIndex = 0;
             lblDisplay.Text = "Display Level Here";
+            lblDisplay.Click += lblDisplay_Click;
             // 
             // lblHeading
             // 
@@ -87,9 +88,9 @@
             label1.ForeColor = SystemColors.ControlText;
             label1.Location = new Point(623, 330);
             label1.Name = "label1";
-            label1.Size = new Size(161, 168);
+            label1.Size = new Size(161, 189);
             label1.TabIndex = 4;
-            label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n\r\n\r\n";
+            label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n+ - Health PickUp\r\n\r\n\r\n";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblHeroHealth
