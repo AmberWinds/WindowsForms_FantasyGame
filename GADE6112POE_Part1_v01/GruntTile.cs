@@ -24,28 +24,22 @@ namespace GADE6112POE_Part1_v01
 
         //ABSTRACT MEMBER OVERRIDES
         public override bool GetMove(out Tile move)
-        {    
-            int canMove = 0;           
-            for (int i = 0; i <= 3; i++)
+        {
+            for (int i = 0; i <= Vision.Length; i++)
             {
-                if (Vision[i] is EmptyTile)
+                int canMove = 3;
+                int randomMove = new Random().Next(0, canMove);
+
+                if (Vision[randomMove] is EmptyTile)
                 {
-                    canMove += 1;
+                    move = Vision[randomMove];
+                    return true;
                 }
             }
-            int randomMove = new Random().Next(0, canMove);
-            if (canMove > 0)
-            {
-                move = Vision[randomMove];
-                return true;
-            }
-            else
-            {
-                move = null;
-                return false;
-            }
-
+            move = null; return false;
         }
+
+
 
         public override CharacterTile[] GetTargets()
         {
