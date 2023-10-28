@@ -229,7 +229,6 @@ namespace GADE6112POE_Part1_v01
                     continue;
                 }
 
-
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
                 {
@@ -241,7 +240,8 @@ namespace GADE6112POE_Part1_v01
                     {
                         if (target is HeroTile)
                         {
-                            enemy.Attack(target); // Calculates and apply damage to the hero
+                            target.TakeDamage(enemy.AttackPower); // Calculates and apply damage to the hero                            
+
 
                             if (currentLevel.Hero.HitPoints <= 0) // Checks if the hero's hit points are reduced to 0
                             {
