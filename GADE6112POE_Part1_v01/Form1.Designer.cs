@@ -32,9 +32,11 @@
             lblHeading = new Label();
             lblBorder = new Label();
             lblInstructions = new Label();
-            label1 = new Label();
+            lblKey = new Label();
             lblHeroHealth = new Label();
             lblAttackStat = new Label();
+            btnReset = new Button();
+            btnExit = new Button();
             SuspendLayout();
             // 
             // lblDisplay
@@ -80,18 +82,18 @@
             lblInstructions.Text = "Use the Arrow Keys and \r\nMake Your way to The Exit.\r\nWatch Out for Enemies \r\n(Use WASD on them) and\r\n See if You Can \r\nBeat All Ten Levels\r\n\r\n";
             lblInstructions.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // lblKey
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.PowderBlue;
-            label1.Font = new Font("Lucida Bright", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(623, 330);
-            label1.Name = "label1";
-            label1.Size = new Size(161, 189);
-            label1.TabIndex = 4;
-            label1.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n+ - Health PickUp\r\n\r\n\r\n";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            lblKey.AutoSize = true;
+            lblKey.BackColor = Color.PowderBlue;
+            lblKey.Font = new Font("Lucida Bright", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            lblKey.ForeColor = SystemColors.ControlText;
+            lblKey.Location = new Point(623, 330);
+            lblKey.Name = "lblKey";
+            lblKey.Size = new Size(161, 189);
+            lblKey.TabIndex = 4;
+            lblKey.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n+ - Health PickUp\r\n\r\n\r\n";
+            lblKey.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblHeroHealth
             // 
@@ -114,14 +116,41 @@
             lblAttackStat.TabIndex = 6;
             lblAttackStat.Text = "Attack: 5";
             // 
+            // btnReset
+            // 
+            btnReset.BackColor = Color.PowderBlue;
+            btnReset.Font = new Font("Lucida Bright", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btnReset.Location = new Point(623, 548);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(161, 35);
+            btnReset.TabIndex = 7;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
+            // 
+            // btnExit
+            // 
+            btnExit.BackColor = Color.PowderBlue;
+            btnExit.CausesValidation = false;
+            btnExit.Font = new Font("Lucida Bright", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btnExit.Location = new Point(623, 601);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(161, 34);
+            btnExit.TabIndex = 8;
+            btnExit.Text = "Exit";
+            btnExit.UseVisualStyleBackColor = false;
+            btnExit.Click += btnExit_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(860, 686);
+            Controls.Add(btnExit);
+            Controls.Add(btnReset);
             Controls.Add(lblAttackStat);
             Controls.Add(lblHeroHealth);
-            Controls.Add(label1);
+            Controls.Add(lblKey);
             Controls.Add(lblInstructions);
             Controls.Add(lblBorder);
             Controls.Add(lblHeading);
@@ -139,8 +168,10 @@
         private Label lblHeading;
         private Label lblBorder;
         private Label lblInstructions;
-        private Label label1;
+        private Label lblKey;
         private Label lblHeroHealth;
         private Label lblAttackStat;
+        private Button btnReset;
+        private Button btnExit;
     }
 }

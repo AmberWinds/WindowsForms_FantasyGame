@@ -20,8 +20,8 @@ namespace GADE6112POE_Part1_v01
         private int levelnumber = 1;
         private HeroTile currentHero;
         private Position heroStand;
-        private int enemySpawn;
-        GameState gameState = GameState.InProgress;
+        //private int enemySpawn;   Commenting out as it is Unused at the Moment
+        private GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
         private int currentLevelNumber = 1; // Added field to track current level number
         private int numPickUp = 1;
@@ -91,27 +91,20 @@ namespace GADE6112POE_Part1_v01
             Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             Tile targetTile;
             Position targetPosition;
+            int numVision = ToInt(move);
 
-            //sets the Target Position, based on the position of the Hero.
-            switch (move) //Switch and Case, depending on which Direction is Chosen
+            //New Switch and case Using Vision Methods
+            //sets the Target Position, based on the position of the Hero.          //I don't know why it breaks, I've done eberything, and i still don't know, The problem appears to be coming from the the Vision arrays code but the same Code also Works except when it doesn't and I don't kniw what to do
+            switch (numVision)
             {
-                case Direction.Up:
-                    targetPosition = new Position((heroStand.X - 1), heroStand.Y);
-                    break;
-                case Direction.Down:
-                    targetPosition = new Position((heroStand.X + 1), heroStand.Y);
-                    break;
-                case Direction.Left:
-                    targetPosition = new Position(heroStand.X, (heroStand.Y - 1));
-                    break;
-                case Direction.Right:
-                    targetPosition = new Position(heroStand.X, (heroStand.Y + 1));
-                    break;
-                case Direction.None: return false;
-                default: return false;
+                case 0: targetTile = currentLevel.Hero.Vision[0]; break;
+                case 1: targetTile = currentLevel.Hero.Vision[1]; break;
+                case 2: targetTile = currentLevel.Hero.Vision[2]; break;
+                case 3: targetTile = currentLevel.Hero.Vision[3]; break;
+                case 4: return false;
+                    default:    return false;
             }
 
-            targetTile = currentLevel.Tiles[targetPosition.X, targetPosition.Y];
 
             //Testing
             Console.WriteLine("\n" + move);
@@ -120,6 +113,7 @@ namespace GADE6112POE_Part1_v01
 
             if (targetTile is HealthPickupTile)
             {
+                targetPosition = new Position(targetTile.positionX, targetTile.positionY);
                 currentLevel.Hero.Heal(5);
                 targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
                 currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
@@ -140,10 +134,9 @@ namespace GADE6112POE_Part1_v01
             }
             else
             {
-                if (targetTile is EmptyTile && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
+                if (targetTile is EmptyTile)// && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
                 {
                     currentLevel.SwapTiles(heroTile, targetTile);
-                    currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
                     successfulMoves++;
                     return true;
                 }
@@ -186,7 +179,7 @@ namespace GADE6112POE_Part1_v01
             currentLevel.Hero.UpdateVision(currentLevel, heroStand);
             int attackDirec = ToInt(attack);
             EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
-            Console.WriteLine("HeroAttack Attack Direc: "+ attackDirec+ "Direction: "+ attack);
+           // Console.WriteLine("HeroAttack Attack Direc: "+ attackDirec+ "Direction: "+ attack);
 
             enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
             return true;
@@ -352,3 +345,25 @@ namespace GADE6112POE_Part1_v01
 
     }
 }
+
+
+//OLD CODE
+//switch (move) //Switch and Case, depending on which Direction is Chosen
+//{
+//    case Direction.Up:
+//        targetPosition = new Position((heroStand.X - 1), heroStand.Y);
+//        break;
+//    case Direction.Down:
+//        targetPosition = new Position((heroStand.X + 1), heroStand.Y);
+//        break;
+//    case Direction.Left:
+//        targetPosition = new Position(heroStand.X, (heroStand.Y - 1));
+//        break;
+//    case Direction.Right:
+//        targetPosition = new Position(heroStand.X, (heroStand.Y + 1));
+//        break;
+//    case Direction.None: return false;
+//    default: return false;
+//}
+
+//targetTile = currentLevel.Tiles[targetPosition.X, targetPosition.Y];

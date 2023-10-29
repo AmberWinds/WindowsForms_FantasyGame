@@ -41,11 +41,11 @@ namespace GADE6112POE_Part1_v01
             hero = heroLevel;
 
             enemies = new EnemyTile[numEnemies];
-            for(int i = 0; i < numEnemies; i++)
+            for (int i = 0; i < numEnemies; i++)
             {
                 Position enemyPosition = GetRandomEmptyPosition();
                 enemies[i] = (EnemyTile)CreateTile(TileType.Enemy, enemyPosition);
-                tiles[enemyPosition.X,enemyPosition.Y] = enemies[i];
+                tiles[enemyPosition.X, enemyPosition.Y] = enemies[i];
             }
 
             pickupTiles = new PickupTile[numPickUps];
@@ -124,17 +124,13 @@ namespace GADE6112POE_Part1_v01
             //Swap the tiles in the 2D array
             Tile tileTemp = tiles[tileHero.positionX, tileHero.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
             tiles[tileHero.positionX, tileHero.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
-            tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tiletemp
+            tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp
 
-            //tileHero = tileTarget;
-            //tileTarget = tileTemp;
-
-            //Update the x and y positions of the tiles
+            ////Update the x and y positions of the tiles
             tileHero.positionX = tileTarget.positionX;
             tileHero.positionY = tileTarget.positionY;
             tileTarget.positionX = tileTemp.positionX;
             tileTarget.positionY = tileTemp.positionY;
-
 
             //testing
             Console.WriteLine("\ntileHero in Swap: " + tileHero.positionX + " " + tileHero.positionY);
@@ -181,7 +177,7 @@ namespace GADE6112POE_Part1_v01
                 if (tiles[xRandom, yRandom] is EmptyTile)       //tests if random x and y is an emptyTile,
                 {
                     position = new Position(xRandom, yRandom);                  //finds the emptytile sets new Position.                                                                                //Console.WriteLine(yRandom + " and    " + xRandom);        //For Debugging purposes.
-                    Console.WriteLine(xRandom + " "+ yRandom);
+                    //Console.WriteLine(xRandom + " "+ yRandom);
                     break;                                                      //breaks out of loop
                 }
             } while (true);

@@ -128,5 +128,15 @@ namespace GADE6112POE_Part1_v01
         {
 
         }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
