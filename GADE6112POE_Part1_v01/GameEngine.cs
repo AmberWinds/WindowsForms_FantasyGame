@@ -99,7 +99,6 @@ namespace GADE6112POE_Part1_v01
                 case 1: targetTile = currentLevel.Hero.Vision[1]; break;
                 case 2: targetTile = currentLevel.Hero.Vision[2]; break;
                 case 3: targetTile = currentLevel.Hero.Vision[3]; break;
-                case 4: return false;
                     default:    return false;
             }
 
@@ -184,13 +183,20 @@ namespace GADE6112POE_Part1_v01
         //HERO ATTACK METHODS
         private bool HeroAttack(Level.Direction attack)
         {
-            currentLevel.Hero.UpdateVision(currentLevel, heroStand);
             int attackDirec = ToInt(attack);
-            EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
-           // Console.WriteLine("HeroAttack Attack Direc: "+ attackDirec+ "Direction: "+ attack);
+            currentLevel.Hero.UpdateVision(currentLevel, heroStand);
+            if (currentLevel.Hero.Vision[attackDirec] is EnemyTile)
+            {
+                EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
+                enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
+                Console.WriteLine("(HeroAttack) hero attack direction "+ attack);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
-            enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
-            return true;
         }
 
         public void TriggerAttack(Level.Direction trigAttack)
@@ -233,7 +239,7 @@ namespace GADE6112POE_Part1_v01
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
                 {
-                    Console.WriteLine("targets is Null");
+
                 }
                 else
                 {
