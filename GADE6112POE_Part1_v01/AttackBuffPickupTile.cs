@@ -15,9 +15,12 @@ namespace GADE6112POE_Part1_v01
 
         public override void ApplyEffect(CharacterTile character)
         {
-           // character.SetDoubleDamage(3); // Increase double damage count by 3
+            character.SetDoubleDamage(1); // Increase double damage count by 3 (each count signifies 3 attacks)
         }
 
-        public override string Display => "*";
+        public override string Display
+        {
+            get { return "*"; }
+        }
     }
 }
