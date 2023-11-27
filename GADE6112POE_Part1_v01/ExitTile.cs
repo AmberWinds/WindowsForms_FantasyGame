@@ -19,5 +19,7 @@ namespace GADE6112POE_Part1_v01
         {
             get { if (DoorLocked) { return '▓'; } else { return '▒'; } }
         }
+
+        public bool Locked { get; internal set; }
     }
 }

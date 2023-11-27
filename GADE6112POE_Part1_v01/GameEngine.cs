@@ -137,8 +137,13 @@ namespace GADE6112POE_Part1_v01
                     return false;
                 }
                 else
-                {                   
+                {
+                    if (!currentLevel.Exit.Locked)
+                    {
+
+                    }
                     NextLevel(); return true;
+
                 }
             }
             else
@@ -227,6 +232,8 @@ namespace GADE6112POE_Part1_v01
                     }
                 }
             }
+
+            currentLevel.UpdateExit();
         }
 
         //ENEMY ATTACK METHODS

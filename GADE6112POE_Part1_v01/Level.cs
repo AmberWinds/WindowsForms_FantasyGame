@@ -18,6 +18,7 @@ namespace GADE6112POE_Part1_v01
         private ExitTile exit;
         private EnemyTile[] enemies;
         private PickupTile[] pickupTiles;
+        private bool exitLocked;
 
         //Properties
         public int getWidth { get { return width; } }
@@ -129,7 +130,7 @@ namespace GADE6112POE_Part1_v01
                     return CreateEnemyTile(position);
                 case TileType.PickUp:
                     return new HealthPickupTile(position);
-                case TileType.PickUp:
+                case TileType.PickUp
                     return CreatePickupTile(position);
             }
         }//end of Method
@@ -160,6 +161,26 @@ namespace GADE6112POE_Part1_v01
                 }
             }
         }
+
+        public void UpdateExit()
+        {
+            bool allEnemiesDefeated = true;
+
+            foreach (EnemyTile enemy in enemies)
+            {
+                if (!enemy.isDead)
+                {
+                    allEnemiesDefeated = false;
+                    break;
+                }
+            }
+
+            if (allEnemiesDefeated)
+            {
+                exit.Locked = false; // Unlock the exit if all enemies are defeated
+            }
+        }
+
 
 
 
