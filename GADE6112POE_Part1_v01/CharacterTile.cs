@@ -85,11 +85,11 @@ namespace GADE6112POE_Part1_v01
                 if (hitPoints <= 0) { return true; } else { return false; } //Hp is 0 or less, character is dead and unable to continue playing.
             }
         }//end of isDead
-
-        public void SetDoubleDamage
+        public void SetDoubleDamage(int count)
         {
-            doubleDamageCount += count;
+            doubleDamageCount += count * 3; // Multiplying count by 3 for triple attack buff stacking
         }
+
 
     }
 }
