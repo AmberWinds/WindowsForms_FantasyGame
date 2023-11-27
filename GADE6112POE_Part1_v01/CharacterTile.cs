@@ -14,11 +14,11 @@ namespace GADE6112POE_Part1_v01
         private int maxHP;
         private Tile[] visionArray;
 
-        //constructor
-        public CharacterTile(Position pos, int hP, int atkPower) : base(pos)
+        //CONSTRUCTOR
+        public CharacterTile(Position pos, int hitPonts, int atkPower) : base(pos)
         {
-            hitPoints = hP;
-            maxHP = hP;
+            hitPoints = hitPonts;
+            maxHP = hitPonts;
             attackPower = atkPower;
             visionArray = new Tile[4];
         }
@@ -30,16 +30,16 @@ namespace GADE6112POE_Part1_v01
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)
         {
-            bool canMoveUp = currentPosition.X < vision.getHeight -1 && currentPosition.X > 0;
-            bool canMoveDown = currentPosition.X < vision.getHeight - 1 && currentPosition.X > 0;
-            bool canMoveRight = currentPosition.Y < vision.getWidth - 1 && currentPosition.Y > 0;
-            bool canMoveLeft = currentPosition.X < vision.getWidth + 1 && currentPosition.Y > 0;
+            //bool canMoveUp = currentPosition.X < vision.getHeight -1 && currentPosition.X > 1;
+            //bool canMoveDown = currentPosition.X < vision.getHeight - 1 && currentPosition.X > 0;
+            //bool canMoveRight = currentPosition.Y < vision.getWidth - 1 && currentPosition.Y > 0;
+            //bool canMoveLeft = currentPosition.X < vision.getWidth - 1 && currentPosition.Y > 1;
 
             //if Cannot Move, Vision remains Unchanged.
-            visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X - 1, currentPosition.Y] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Up Tile 
-            visionArray[1] = canMoveRight ? vision.Tiles[currentPosition.X, currentPosition.Y+1]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Right Tile 
-            visionArray[2] = canMoveDown ? vision.Tiles[currentPosition.X+1, currentPosition.Y ]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Down Tile 
-            visionArray[3] = canMoveLeft ? vision.Tiles[currentPosition.X, currentPosition.Y - 1]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Left Tile
+            visionArray[0] = vision.Tiles[currentPosition.X - 1, currentPosition.Y]; //Up Tile 
+            visionArray[1] = vision.Tiles[currentPosition.X, currentPosition.Y+1]; //Right Tile 
+            visionArray[2] = vision.Tiles[currentPosition.X + 1, currentPosition.Y]; //Down Tile 
+            visionArray[3] = vision.Tiles[currentPosition.X, currentPosition.Y - 1]; //Left Tile
    
         }//end of Update Vision 
 
@@ -49,7 +49,7 @@ namespace GADE6112POE_Part1_v01
             if (hitPoints <= 0)
             {
                 hitPoints = 0;
-                isDead();
+                //isDead;
             }
         }
 
@@ -68,9 +68,12 @@ namespace GADE6112POE_Part1_v01
             TakeDamage(opponent.attackPower);
         }
 
-        public bool isDead() //method to check if the character HP is sufficient to continue playing
+        public bool isDead //method to check if the character HP is sufficient to continue playing
         {
-            if (hitPoints <= 0) { return true; } else { return false; } //Hp is 0 or less, character is dead and unable to continue playing.
+            get
+            {
+                if (hitPoints <= 0) { return true; } else { return false; } //Hp is 0 or less, character is dead and unable to continue playing.
+            }
         }//end of isDead
 
 

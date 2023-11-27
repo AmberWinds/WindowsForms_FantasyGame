@@ -20,7 +20,7 @@ namespace GADE6112POE_Part1_v01
         //OVERRIDE DISPLAY  
         public override char Display
         {
-            get { if (isDead()) { return 'x'; } else { return 'Ϫ'; } } //if Grunt is dead returns a 'x'
+            get { if (isDead) { return 'x'; } else { return 'Ϫ'; } } //if Grunt is dead returns a 'x'
         }
 
 

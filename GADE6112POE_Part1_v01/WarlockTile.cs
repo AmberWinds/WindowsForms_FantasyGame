@@ -24,7 +24,7 @@ namespace GADE6112POE_Part1_v01
         //Override Display
         public override char Display
         {
-            get { if (isDead()) { return 'x'; } else { return 'ᐂ'; } } //if Warlock is dead returns a 'x'
+            get { if (isDead) { return 'x'; } else { return 'ᐂ'; } } //if Warlock is dead returns a 'x'
         }
 
         public override bool GetMove(out Tile move)
@@ -40,7 +40,7 @@ namespace GADE6112POE_Part1_v01
             warlockVision[1] = enemyLevel.Tiles[currentPosition.X, currentPosition.Y + 1];      //Warlock RIGHT
             warlockVision[2] = enemyLevel.Tiles[currentPosition.X + 1, currentPosition.Y];      //Warlock DOWN
             warlockVision[3] = enemyLevel.Tiles[currentPosition.X, currentPosition.Y - 1];      //Warlock LEFT
-            warlockVision[4] = enemyLevel.Tiles[currentPosition.X-1, currentPosition.Y + 1];    //Warlock UP - RIGHT /Diagonally UP - RIGHT
+            warlockVision[4] = enemyLevel.Tiles[currentPosition.X-1, currentPosition.Y + 1];    //Warlock UP - RIGHT 
             warlockVision[5] = enemyLevel.Tiles[currentPosition.X - 1, currentPosition.Y - 1];  //Warlock UP - LEFT
             warlockVision[6] = enemyLevel.Tiles[currentPosition.X +1, currentPosition.Y+1];     //Warlock DOWN - RIGHT
             warlockVision[7] = enemyLevel.Tiles[currentPosition.X +1, currentPosition.Y-1];     //Warlock DOWN - LEFT

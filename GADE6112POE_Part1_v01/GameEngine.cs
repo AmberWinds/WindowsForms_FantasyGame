@@ -100,27 +100,27 @@ namespace GADE6112POE_Part1_v01
             Tile targetTile;
             Position targetPosition;
             int numVision = ToInt(move); //turns into an integer for the Switch Statement
-
             //New Switch and case Using Vision Methods
             //sets the Target Position, based on the position of the Hero.          //I don't know why it breaks, I've done eberything, and i still don't know, The problem appears to be coming from the the Vision arrays code but the same Code also Works except when it doesn't and I don't kniw what to do
             switch (numVision)
             {
-                case 0: targetTile = currentLevel.Hero.Vision[0]; break;
-                case 1: targetTile = currentLevel.Hero.Vision[1]; break;
-                case 2: targetTile = currentLevel.Hero.Vision[2]; break;
-                case 3: targetTile = currentLevel.Hero.Vision[3]; break;
+                case 0: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X - 1, currentLevel.HeroPosition.Y]; break;
+                case 1: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y + 1]; break;
+                case 2: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X + 1, currentLevel.HeroPosition.Y]; break;
+                case 3: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y - 1]; break;
                     default:    return false;
             }
+            
 
-            heroStand = currentLevel.HeroPosition;
-            currentLevel.Hero.HerosPlace = heroStand;
-            Tile heroTile = currentLevel.Tiles[heroStand.X, heroStand.Y];
+            Tile heroTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y];
 
             //Testing
             Console.WriteLine("\n" + move);
             Console.WriteLine("(MoveHero) Hero Position from HeroTile Class: "+ currentLevel.Hero.HerosPlace.X + " "+ currentLevel.Hero.HerosPlace.Y);
-            Console.WriteLine("(MoveHero)Hero Position from heroTile: " + heroTile.positionX + " " + heroTile.positionY);
-                    
+            Console.WriteLine("(MoveHero) Hero Position from Level Class"+ currentLevel.HeroPosition.X + " "+ currentLevel.HeroPosition.Y);
+            Console.WriteLine("(MoveHero)Hero Position from heroTile Tile: " + heroTile.positionX + " " + heroTile.positionY);
+            Console.WriteLine( "(MoveHero) targetTile x and y: "+ targetTile.positionX+ " "+ targetTile.positionY);
+
             if (targetTile is HealthPickupTile)
             {
                 targetPosition = new Position(targetTile.positionX, targetTile.positionY);
@@ -128,7 +128,6 @@ namespace GADE6112POE_Part1_v01
                 targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
                 currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
             }
-
 
             if (targetTile is ExitTile)
             {
@@ -168,7 +167,7 @@ namespace GADE6112POE_Part1_v01
             {
                 EnemyTile enemy = currentLevel.Enemies[i];
 
-                if (enemy == null || enemy.isDead() == true)// Skip the enemy if it's null or dead
+                if (enemy == null || enemy.isDead == true)// Skip the enemy if it's null or dead
                 {
                     continue;
                 }
@@ -222,7 +221,7 @@ namespace GADE6112POE_Part1_v01
                     EnemiesAttack();
 
                     // Check if the hero is dead
-                    if (currentLevel.Hero.isDead())
+                    if (currentLevel.Hero.isDead)
                     {
                         gameState = GameState.GameOver;
                     }
@@ -236,7 +235,7 @@ namespace GADE6112POE_Part1_v01
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {;
                 EnemyTile enemy = currentLevel.Enemies[i];
-                if (enemy == null || enemy.isDead()) // Skips the enemy if it's null or dead
+                if (enemy == null || enemy.isDead) // Skips the enemy if it's null or dead
                 {
                     continue;
                 }

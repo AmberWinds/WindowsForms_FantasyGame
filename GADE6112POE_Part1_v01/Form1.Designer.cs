@@ -88,11 +88,11 @@
             lblKey.BackColor = Color.PowderBlue;
             lblKey.Font = new Font("Lucida Bright", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             lblKey.ForeColor = SystemColors.ControlText;
-            lblKey.Location = new Point(623, 330);
+            lblKey.Location = new Point(623, 283);
             lblKey.Name = "lblKey";
-            lblKey.Size = new Size(161, 189);
+            lblKey.Size = new Size(175, 231);
             lblKey.TabIndex = 4;
-            lblKey.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\n+ - Health PickUp\r\n\r\n\r\n";
+            lblKey.Text = "\r\n▒ - The exit\r\n█ - A wall tile \r\n▼ – The hero \r\n. – An empty tile \r\nϪ - Grunt Enemy\r\nᐂ - Warlock Enemy\r\n§ - Tyrant Enemy\r\n+ - Health PickUp\r\n\r\n\r\n";
             lblKey.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblHeroHealth
@@ -115,6 +115,7 @@
             lblAttackStat.Size = new Size(83, 24);
             lblAttackStat.TabIndex = 6;
             lblAttackStat.Text = "Attack: 5";
+            lblAttackStat.Click += lblAttackStat_Click;
             // 
             // btnReset
             // 

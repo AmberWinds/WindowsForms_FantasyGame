@@ -8,8 +8,9 @@ namespace GADE6112POE_Part1_v01
 {
     public class HeroTile : CharacterTile
     {
-        internal int hitPoints = 40;
-        Position heroPlace;
+        private int hitPoints = 40;
+        private Position heroPlace;
+        private int attack = 5;
         public HeroTile(Position heroPosition) : base(heroPosition, 40, 5)
         {
             heroPlace = heroPosition;
@@ -17,7 +18,7 @@ namespace GADE6112POE_Part1_v01
 
         public override char Display
         {
-            get { if (isDead()) { return 'x'; } else { return '▼'; } } //if hero is dead returns a 'x'
+            get { if (isDead) { return 'x'; } else { return '▼'; } } //if hero is dead returns a 'x'
         }
 
         public Position HerosPlace { get { return heroPlace; } set { heroPlace = value; } }

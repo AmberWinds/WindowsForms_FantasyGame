@@ -157,16 +157,11 @@ namespace GADE6112POE_Part1_v01
                     tileTarget.positionY = tileMoving.positionY;
                 }
             }
-
-
         }
+
+
 
         //Methods Private
-        private Tile CreateTile(TileType tileType, int x, int y) //Overloaded method that accepts x and y then turns it into a position for the TileType.
-        {
-            Position position = new Position(x, y);
-            return CreateTile(tileType, position);
-        }
 
         private EnemyTile CreateEnemyTile(Position enemyPosition)
         {
@@ -219,8 +214,7 @@ namespace GADE6112POE_Part1_v01
                 yRandom = random.Next(1, height - 1);
                 if (tiles[xRandom, yRandom] is EmptyTile)       //tests if random x and y is an emptyTile,
                 {
-                    position = new Position(xRandom, yRandom);                  //finds the emptytile sets new Position.                                                                                //Console.WriteLine(yRandom + " and    " + xRandom);        //For Debugging purposes.
-                    //Console.WriteLine(xRandom + " "+ yRandom);
+                    position = new Position(xRandom, yRandom);                  //finds the emptytile sets new Position.                                                            
                     break;                                                      //breaks out of loop
                 }
             } while (true);

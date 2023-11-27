@@ -24,7 +24,7 @@ namespace GADE6112POE_Part1_v01
 
         public override char Display
         {
-            get { if (isDead()) { return 'x'; } else { return '§'; } } //if Warlock is dead returns a 'x'
+            get { if (isDead) { return 'x'; } else { return '§'; } } //if Warlock is dead returns a 'x'
         }
 
         public override bool GetMove(out Tile move) //Tyrant must Move towards the Hero Tile.

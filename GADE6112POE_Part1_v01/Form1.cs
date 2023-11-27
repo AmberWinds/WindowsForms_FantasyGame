@@ -138,5 +138,10 @@ namespace GADE6112POE_Part1_v01
         {
             Application.Exit();
         }
+
+        private void lblAttackStat_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
