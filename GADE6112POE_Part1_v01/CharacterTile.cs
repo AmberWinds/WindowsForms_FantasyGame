@@ -30,13 +30,16 @@ namespace GADE6112POE_Part1_v01
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)
         {
-            visionArray[0] = vision.Tiles[currentPosition.X-1, currentPosition.Y]; //Up Tile 
-            visionArray[1] = vision.Tiles[currentPosition.X, currentPosition.Y+1]; //Right Tile 
-            visionArray[2] = vision.Tiles[currentPosition.X+1, currentPosition.Y ]; //Down Tile 
-            visionArray[3] = vision.Tiles[currentPosition.X, currentPosition.Y - 1]; //Left Tile
+            bool canMoveUp = currentPosition.X < vision.getHeight -1 && currentPosition.X > 0;
+            bool canMoveDown = currentPosition.X < vision.getHeight - 1 && currentPosition.X > 0;
+            bool canMoveRight = currentPosition.Y < vision.getWidth - 1 && currentPosition.Y > 0;
+            bool canMoveLeft = currentPosition.X < vision.getWidth + 1 && currentPosition.Y > 0;
 
-            Console.WriteLine("UpdateVision Currentposition x and y: "+ currentPosition.X + " "+ currentPosition.Y);
-            Console.WriteLine("UpdateVision VisionArray: Up "+ visionArray[0].positionX + " "+ visionArray[0].positionY);    
+            visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X-1, currentPosition.Y]: null; //Up Tile 
+            visionArray[1] = canMoveRight ? vision.Tiles[currentPosition.X, currentPosition.Y+1]: null; //Right Tile 
+            visionArray[2] = canMoveDown ? vision.Tiles[currentPosition.X+1, currentPosition.Y ]: null; //Down Tile 
+            visionArray[3] = canMoveLeft ? vision.Tiles[currentPosition.X, currentPosition.Y - 1]: null; //Left Tile
+   
         }//end of Update Vision 
 
         public void TakeDamage(int damage)

@@ -13,6 +13,7 @@ namespace GADE6112POE_Part1_v01
         private Position tyrantPos;
         private List <CharacterTile> Targets;
         private Tile targetTile;
+
         //Constructor
         public TyrantTile(Position tyrantPosition, Level enemyLevel) : base (tyrantPosition, hitPoints, attack, enemyLevel)
         {
@@ -28,60 +29,48 @@ namespace GADE6112POE_Part1_v01
 
         public override bool GetMove(out Tile move) //Tyrant must Move towards the Hero Tile.
         {
-           foreach (var vision in enemyLevel.Hero.Vision)
+            foreach (var vision in enemyLevel.Hero.Vision)
             {
                 if (tyrantPos.X != vision.positionX && tyrantPos.Y != vision.positionY)
                 {
                     move = vision;
                     return true;
                 }
-
             }
+
             move = null;
             return false;
-
         }
 
         public override CharacterTile[] GetTargets()
         {
-            while (targetTile is not WallTile) //Searching through the *X* values therefore searching through the vertical Space
+            //int controllers for the while Loops
+            for (int i = 1; i < enemyLevel.getHeight; i++) //Searching through the *X* values therefore searching through the vertical Space
             {
-                int i = 1;
-                targetTile.positionX += i;
-                
+                targetTile.positionX =i;
+                Console.WriteLine("(TyrantTile) targetTile.positionX: " + targetTile.positionX);
+
                 if (targetTile is CharacterTile)
                 {
                     Targets.Add ((CharacterTile)targetTile);
                 }
 
-                targetTile.positionX-=i;
-                if (targetTile is CharacterTile)
-                {
-                    Targets.Add((CharacterTile)targetTile);
-                }
-
-                i++;
             }//end while
 
-            targetTile = enemyLevel.Tiles[tyrantPos.X, tyrantPos.Y];
 
-            while (targetTile is not WallTile) //Searching through the *Y* values therefore searching through the Horizontal Space
+            for (int i = 1; i < enemyLevel.getWidth; i++) //Searching through the *Y* values therefore searching through the Horizontal Space
             {
-                int i = 1;
-                targetTile.positionY += i;
+                targetTile.positionY = i;
+                Console.WriteLine("(TyrantTile) targetTile.positionX: " + targetTile.positionY);
 
-                if(targetTile is CharacterTile)
-                {
-                    Targets.Add((CharacterTile)targetTile);
-                }
-
-                targetTile.positionY -= i;
                 if (targetTile is CharacterTile)
                 {
                     Targets.Add((CharacterTile)targetTile);
                 }
-                i++;
+
             }//end while
+
+            Console.WriteLine("Array in tyrant Tile display: "+ Targets.ToArray()[0].positionX + " "+ Targets.ToArray()[0].positionY);
 
             return Targets.ToArray();
 

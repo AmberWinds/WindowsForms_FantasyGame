@@ -141,20 +141,23 @@ namespace GADE6112POE_Part1_v01
             Console.WriteLine("tileMoving in Swap: " + tileMoving.positionX + " " + tileMoving.positionY);
             Console.WriteLine("targetTile in Swap: " + tileTarget.positionX + " " + tileTarget.positionY);
 
-            //tileTarget.positionX != 0 && tileTarget.positionX != width - 1 && tileTarget.positionY != height - 1 || tileTarget.positionY == 0
-            if (tileTarget is not WallTile || tileTarget is not EnemyTile) //tests if TargetTile is Valid Before Swap
+            if (tileMoving.positionX >= 0 && tileMoving.positionX < width && tileMoving.positionY >= 0 && tileMoving.positionY < height)
             {
-                tileTemp = tiles[tileMoving.positionX, tileMoving.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
-                tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
-                tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp
+                if (tileTarget.positionX >= 0 && tileTarget.positionX < width && tileTarget.positionY >= 0 && tileTarget.positionY < height) //tests if TargetTile is Valid Before Swap
+                {
+                    tileTemp = tiles[tileMoving.positionX, tileMoving.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
+                    tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
+                    tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp
 
-                //Update the x and y positions of the tiles
-                tileMoving.positionX = tileTarget.positionX;
-                tileMoving.positionY = tileTarget.positionY;
+                    //Update the x and y positions of the tiles
+                    tileMoving.positionX = tileTarget.positionX;
+                    tileMoving.positionY = tileTarget.positionY;
 
-                tileTarget.positionX = tileMoving.positionY;
-                tileTarget.positionY = tileMoving.positionY;
+                    tileTarget.positionX = tileMoving.positionY;
+                    tileTarget.positionY = tileMoving.positionY;
+                }
             }
+
 
         }
 

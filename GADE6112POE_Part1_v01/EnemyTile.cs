@@ -12,7 +12,7 @@ namespace GADE6112POE_Part1_v01
         protected Level enemyLevel;
 
         //CONSTRUCTOR
-        public EnemyTile(Position enemyUnit, int hitP, int attackPower, Level enemyLevel) : base(enemyUnit, hitP, attackPower)
+        public EnemyTile(Position enemyUnit, int hitPoints, int attackPower, Level enemyLevel) : base(enemyUnit, hitPoints, attackPower)
         {
             this.enemyLevel = enemyLevel;
         }

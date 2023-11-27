@@ -20,6 +20,7 @@ namespace GADE6112POE_Part1_v01
         private int levelnumber = 1;
         private HeroTile currentHero;
         private Position heroStand;
+
         //private int enemySpawn;   Commenting out as it is Unused at the Moment
         private GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
@@ -68,18 +69,27 @@ namespace GADE6112POE_Part1_v01
         //MOVEMENT METHODS
         public void TriggerMovement(Level.Direction move)
         {
-           UpdateVision();
+           
+           currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
            if (gameState == GameState.GameOver || gameState == GameState.Complete)
            {
                 return; // Game is over, do nothing
            }
 
             MoveHero(move);
-
-        // Checks if it's time to move enemies (every 2 successful moves)
+            // Checks if it's time to move enemies (every 2 successful moves)
             if (successfulMoves >= 2 )
             {
                 MoveEnemies();
+                
+                for (int i = 0; i < currentLevel.Enemies.Length; i++)
+                {
+                    EnemyTile enemy;
+                    enemy = currentLevel.Enemies[i];
+                    Position enemyUnit = new Position(enemy.positionX, enemy.positionY);
+                    enemy.UpdateVision(currentLevel, enemyUnit);
+                }
+                
                 successfulMoves = 0;
             }
             
@@ -89,7 +99,7 @@ namespace GADE6112POE_Part1_v01
                     Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             Tile targetTile;
             Position targetPosition;
-            int numVision = ToInt(move);
+            int numVision = ToInt(move); //turns into an integer for the Switch Statement
 
             //New Switch and case Using Vision Methods
             //sets the Target Position, based on the position of the Hero.          //I don't know why it breaks, I've done eberything, and i still don't know, The problem appears to be coming from the the Vision arrays code but the same Code also Works except when it doesn't and I don't kniw what to do
@@ -110,43 +120,39 @@ namespace GADE6112POE_Part1_v01
             Console.WriteLine("\n" + move);
             Console.WriteLine("(MoveHero) Hero Position from HeroTile Class: "+ currentLevel.Hero.HerosPlace.X + " "+ currentLevel.Hero.HerosPlace.Y);
             Console.WriteLine("(MoveHero)Hero Position from heroTile: " + heroTile.positionX + " " + heroTile.positionY);
-                    Console.WriteLine("(MoveHero)TargetPosition from targetTile: " + targetTile.positionX + " " + targetTile.positionY);
-
+                    
             if (targetTile is HealthPickupTile)
             {
                 targetPosition = new Position(targetTile.positionX, targetTile.positionY);
                 currentLevel.Hero.Heal(5);
                 targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
                 currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
-
             }
+
 
             if (targetTile is ExitTile)
             {
                 if (levelnumber == numberOfLevels)
-                {
-                    UpdateVision();
+                {                  
                     gameState = GameState.Complete;
                     return false;
                 }
                 else
-                {
-                    UpdateVision();
+                {                   
                     NextLevel(); return true;
                 }
             }
             else
             {
                 if (targetTile is EmptyTile)// && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
-                {
-                    UpdateVision();
+                {                    
                     currentLevel.SwapTiles(heroTile, targetTile);
                     successfulMoves++;
+                    UpdateVision();
                     return true;
                 }
                 else
-                {
-                    UpdateVision();
+                {                    
                     return false;
                 }
             }
@@ -157,7 +163,7 @@ namespace GADE6112POE_Part1_v01
 
         private void MoveEnemies()
         {
-
+            Tile move;// Check if the enemy has a valid move
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
                 EnemyTile enemy = currentLevel.Enemies[i];
@@ -166,11 +172,10 @@ namespace GADE6112POE_Part1_v01
                 {
                     continue;
                 }
-
-                Tile move;// Check if the enemy has a valid move
+    
                 if (enemy.GetMove(out move))
                 {
-                    if (move is EmptyTile)
+                    if (move is EmptyTile && move.positionX >= 0 && move.positionX < currentLevel.getWidth && move.positionY >= 0 && move.positionY < currentLevel.getHeight)
                     {
                         currentLevel.SwapTiles(enemy, move); // Swap the enemy with the target tile
                     }
