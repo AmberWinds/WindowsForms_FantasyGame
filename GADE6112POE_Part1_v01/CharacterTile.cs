@@ -35,10 +35,11 @@ namespace GADE6112POE_Part1_v01
             bool canMoveRight = currentPosition.Y < vision.getWidth - 1 && currentPosition.Y > 0;
             bool canMoveLeft = currentPosition.X < vision.getWidth + 1 && currentPosition.Y > 0;
 
-            visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X-1, currentPosition.Y]: null; //Up Tile 
-            visionArray[1] = canMoveRight ? vision.Tiles[currentPosition.X, currentPosition.Y+1]: null; //Right Tile 
-            visionArray[2] = canMoveDown ? vision.Tiles[currentPosition.X+1, currentPosition.Y ]: null; //Down Tile 
-            visionArray[3] = canMoveLeft ? vision.Tiles[currentPosition.X, currentPosition.Y - 1]: null; //Left Tile
+            //if Cannot Move, Vision remains Unchanged.
+            visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X - 1, currentPosition.Y] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Up Tile 
+            visionArray[1] = canMoveRight ? vision.Tiles[currentPosition.X, currentPosition.Y+1]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Right Tile 
+            visionArray[2] = canMoveDown ? vision.Tiles[currentPosition.X+1, currentPosition.Y ]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Down Tile 
+            visionArray[3] = canMoveLeft ? vision.Tiles[currentPosition.X, currentPosition.Y - 1]: vision.Tiles[currentPosition.X, currentPosition.Y]; //Left Tile
    
         }//end of Update Vision 
 

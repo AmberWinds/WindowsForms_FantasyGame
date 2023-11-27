@@ -31,7 +31,7 @@ namespace GADE6112POE_Part1_v01
         {
             foreach (var vision in enemyLevel.Hero.Vision)
             {
-                if (tyrantPos.X != vision.positionX && tyrantPos.Y != vision.positionY)
+                if (vision is EmptyTile)
                 {
                     move = vision;
                     return true;
@@ -45,33 +45,21 @@ namespace GADE6112POE_Part1_v01
         public override CharacterTile[] GetTargets()
         {
             //int controllers for the while Loops
-            for (int i = 1; i < enemyLevel.getHeight; i++) //Searching through the *X* values therefore searching through the vertical Space
+            for (int i = 1; i < enemyLevel.getWidth-1; i++) //Searching through the *X* values therefore searching through the vertical Space
             {
-                targetTile.positionX =i;
-                Console.WriteLine("(TyrantTile) targetTile.positionX: " + targetTile.positionX);
-
-                if (targetTile is CharacterTile)
+                for (int j = 1; j < enemyLevel.getHeight-1; j++)
                 {
-                    Targets.Add ((CharacterTile)targetTile);
+                    targetTile = enemyLevel.Tiles[i, j];
+
+                    if (targetTile is CharacterTile)
+                    {
+                        Targets.Add((CharacterTile)targetTile);
+                    }
+
                 }
 
             }//end while
-
-
-            for (int i = 1; i < enemyLevel.getWidth; i++) //Searching through the *Y* values therefore searching through the Horizontal Space
-            {
-                targetTile.positionY = i;
-                Console.WriteLine("(TyrantTile) targetTile.positionX: " + targetTile.positionY);
-
-                if (targetTile is CharacterTile)
-                {
-                    Targets.Add((CharacterTile)targetTile);
-                }
-
-            }//end while
-
-            Console.WriteLine("Array in tyrant Tile display: "+ Targets.ToArray()[0].positionX + " "+ Targets.ToArray()[0].positionY);
-
+            
             return Targets.ToArray();
 
         }
