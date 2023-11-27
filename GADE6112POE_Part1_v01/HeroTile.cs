@@ -20,7 +20,7 @@ namespace GADE6112POE_Part1_v01
             get { if (isDead()) { return 'x'; } else { return '▼'; } } //if hero is dead returns a 'x'
         }
 
-        public Position HerosPlace { get { return heroPlace; } }
+        public Position HerosPlace { get { return heroPlace; } set { heroPlace = value; } }
 
     }
 }

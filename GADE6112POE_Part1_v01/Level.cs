@@ -44,8 +44,10 @@ namespace GADE6112POE_Part1_v01
             for (int i = 0; i < numEnemies; i++)
             {
                 Position enemyPosition = GetRandomEmptyPosition();
+                CreateEnemyTile(enemyPosition);
                 enemies[i] = (EnemyTile)CreateTile(TileType.Enemy, enemyPosition);
                 tiles[enemyPosition.X, enemyPosition.Y] = enemies[i];
+
             }
 
             pickupTiles = new PickupTile[numPickUps];
@@ -67,9 +69,20 @@ namespace GADE6112POE_Part1_v01
             }
             else if (heroLevel != null)
             {
-                hero = (HeroTile)CreateTile(TileType.Hero, heroLevel.HerosPlace);
-                tiles[heroLevel.HerosPlace.X, heroLevel.HerosPlace.Y] = hero;
-                heroPosition = heroLevel.HerosPlace;
+                if (heroLevel.HerosPlace.X >= 0 && heroLevel.HerosPlace.X < height && heroLevel.HerosPlace.Y >= 0 && heroLevel.HerosPlace.Y < width)
+                {
+                    Position newheroPosition = GetRandomEmptyPosition();
+                    hero = (HeroTile)CreateTile(TileType.Hero, newheroPosition);
+                    tiles[newheroPosition.X, newheroPosition.Y] = hero;
+                    heroPosition = newheroPosition;
+                }
+                else
+                {
+                    hero = (HeroTile)CreateTile(TileType.Hero, heroLevel.HerosPlace);
+                    tiles[heroLevel.HerosPlace.X, heroLevel.HerosPlace.Y] = hero;
+                    heroPosition = heroLevel.HerosPlace;
+                }
+
             }
 
             Position exitPosition = GetRandomEmptyPosition();
@@ -113,30 +126,36 @@ namespace GADE6112POE_Part1_v01
                 default:
                     return new EmptyTile(position);
                 case TileType.Enemy:  // this case is for creating GruntTile
-                    return new GruntTile(position);
+                    return CreateEnemyTile(position);
                 case TileType.PickUp:
                     return new HealthPickupTile(position);
             }
         }//end of Method
 
-        public void SwapTiles(Tile tileHero, Tile tileTarget)
+        public void SwapTiles(Tile tileMoving, Tile tileTarget)
         {
+
             //Swap the tiles in the 2D array
-            Tile tileTemp = tiles[tileHero.positionX, tileHero.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
-            tiles[tileHero.positionX, tileHero.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
+            Tile tileTemp;
+            Console.WriteLine("\nheroPosition in Swap (Level Class): "+ heroPosition.X + " "+ heroPosition.Y);
+            Console.WriteLine("tileMoving in Swap: " + tileMoving.positionX + " " + tileMoving.positionY);
+            Console.WriteLine("targetTile in Swap: " + tileTarget.positionX + " " + tileTarget.positionY);
+
+            tileTemp = tiles[tileMoving.positionX, tileMoving.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
+            tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
             tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp
 
-            ////Update the x and y positions of the tiles
-            tileHero.positionX = tileTarget.positionX;
-            tileHero.positionY = tileTarget.positionY;
-            tileTarget.positionX = tileTemp.positionX;
-            tileTarget.positionY = tileTemp.positionY;
+            //Update the x and y positions of the tiles
+            tileMoving.positionX = tileTarget.positionX;
+            tileMoving.positionY = tileTarget.positionY;
+
+            tileTarget.positionX = tileMoving.positionY;
+            tileTarget.positionY = tileMoving.positionY;
+
+            
 
             //testing
-            Console.WriteLine("\ntileHero in Swap: " + tileHero.positionX + " " + tileHero.positionY);
-            Console.WriteLine("targetTile in Swap: " + tileTarget.positionX + " " + tileTarget.positionY);
         }
-
 
         //Methods Private
         private Tile CreateTile(TileType tileType, int x, int y) //Overloaded method that accepts x and y then turns it into a position for the TileType.
@@ -144,6 +163,26 @@ namespace GADE6112POE_Part1_v01
             Position position = new Position(x, y);
             return CreateTile(tileType, position);
         }
+
+        private EnemyTile CreateEnemyTile(Position enemyPosition)
+        {
+            Random random = new Random();
+            int spawn = random.Next(101);
+
+            if (spawn <= 50)
+            {
+                 return new GruntTile(enemyPosition, this);
+            }
+            else if (spawn > 50 && spawn <= 80)
+            {
+                return new WarlockTile(enemyPosition, this);
+            }
+            else
+            {
+                return new TyrantTile(enemyPosition, this);
+            }
+        }
+
 
         private void InitialiseTiles()
         {

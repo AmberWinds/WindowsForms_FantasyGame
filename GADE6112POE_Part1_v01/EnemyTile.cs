@@ -9,10 +9,12 @@ namespace GADE6112POE_Part1_v01
 {
     public abstract class EnemyTile: CharacterTile
     {
-        //CONSTRUCTOR
-        public EnemyTile(Position enemyUnit, int hitP, int attackPower) : base(enemyUnit, hitP, attackPower)
-        {
+        protected Level enemyLevel;
 
+        //CONSTRUCTOR
+        public EnemyTile(Position enemyUnit, int hitP, int attackPower, Level enemyLevel) : base(enemyUnit, hitP, attackPower)
+        {
+            this.enemyLevel = enemyLevel;
         }
 
         public Position Position { get; internal set; }

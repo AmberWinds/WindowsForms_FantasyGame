@@ -86,9 +86,7 @@ namespace GADE6112POE_Part1_v01
         }
         private bool MoveHero(Level.Direction move)
         {
-            heroStand = currentLevel.HeroPosition;
-            Tile heroTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y];
-            Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
+                    Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             Tile targetTile;
             Position targetPosition;
             int numVision = ToInt(move);
@@ -105,11 +103,15 @@ namespace GADE6112POE_Part1_v01
                     default:    return false;
             }
 
+            heroStand = currentLevel.HeroPosition;
+            currentLevel.Hero.HerosPlace = heroStand;
+            Tile heroTile = currentLevel.Tiles[heroStand.X, heroStand.Y];
 
             //Testing
             Console.WriteLine("\n" + move);
+            Console.WriteLine("(MoveHero) Hero Position from HeroTile Class: "+ currentLevel.Hero.HerosPlace.X + " "+ currentLevel.Hero.HerosPlace.Y);
             Console.WriteLine("(MoveHero)Hero Position from heroTile: " + heroTile.positionX + " " + heroTile.positionY);
-            Console.WriteLine("(MoveHero)TargetPosition from targetTile: " + targetTile.positionX + " " + targetTile.positionY);
+                    Console.WriteLine("(MoveHero)TargetPosition from targetTile: " + targetTile.positionX + " " + targetTile.positionY);
 
             if (targetTile is HealthPickupTile)
             {
@@ -124,11 +126,13 @@ namespace GADE6112POE_Part1_v01
             {
                 if (levelnumber == numberOfLevels)
                 {
+                    UpdateVision();
                     gameState = GameState.Complete;
                     return false;
                 }
                 else
                 {
+                    UpdateVision();
                     NextLevel(); return true;
                 }
             }
@@ -136,15 +140,19 @@ namespace GADE6112POE_Part1_v01
             {
                 if (targetTile is EmptyTile)// && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
                 {
+                    UpdateVision();
                     currentLevel.SwapTiles(heroTile, targetTile);
                     successfulMoves++;
                     return true;
                 }
                 else
                 {
+                    UpdateVision();
                     return false;
                 }
             }
+
+            
 
         }//End Of Move Hero         Commented this to make it easier to see where methods begin and end
 
@@ -346,7 +354,7 @@ namespace GADE6112POE_Part1_v01
     }
 }
 
-
+ 
 //OLD CODE
 //switch (move) //Switch and Case, depending on which Direction is Chosen
 //{

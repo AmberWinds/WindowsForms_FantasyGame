@@ -9,16 +9,18 @@ namespace GADE6112POE_Part1_v01
     internal class GruntTile : EnemyTile
     {
         //Variables
-        Position gruntPosition;
+        private Position gruntPosition;
+        private const int hitPoints = 10;
+        private const int attack = 1;
         //CONSTRUCTOR
-        public GruntTile(Position gruntUnit) : base(gruntUnit, 10, 1) //Position, Hp, Attack
+        public GruntTile(Position gruntUnit, Level enemyLevel) : base(gruntUnit, hitPoints, attack, enemyLevel) //Position, Hp, Attack, 
         {
             gruntPosition = gruntUnit;
         }
         //OVERRIDE DISPLAY  
         public override char Display
         {
-            get { if (isDead()) { return 'x'; } else { return 'Ϫ'; } } //if hero is dead returns a 'x'
+            get { if (isDead()) { return 'x'; } else { return 'Ϫ'; } } //if Grunt is dead returns a 'x'
         }
 
 
