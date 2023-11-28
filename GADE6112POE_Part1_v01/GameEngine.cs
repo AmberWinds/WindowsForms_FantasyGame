@@ -331,7 +331,7 @@ namespace GADE6112POE_Part1_v01
                 currentLevel = new Level(width, height,NumEnemySpawn(), numPickUp, currentHero);        //Creates a new CurrentLevel.
             }
         }
-        public void SaveGame(string filePath)
+       /* public void SaveGame(string filePath)
         {
             GameSaveData saveData = new GameSaveData(numberOfLevels, currentLevelNumber, currentLevel);
 
@@ -348,7 +348,7 @@ namespace GADE6112POE_Part1_v01
             {
                 Console.WriteLine("Error saving the game: " + ex.Message);
             }
-        }
+        }*/
 
 
         //ToString Methods
