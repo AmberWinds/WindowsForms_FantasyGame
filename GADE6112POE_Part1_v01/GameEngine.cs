@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using static GADE6112POE_Part1_v01.Level;
@@ -328,6 +329,24 @@ namespace GADE6112POE_Part1_v01
                 }
 
                 currentLevel = new Level(width, height,NumEnemySpawn(), numPickUp, currentHero);        //Creates a new CurrentLevel.
+            }
+        }
+        public void SaveGame(string filePath)
+        {
+            GameSaveData saveData = new GameSaveData(numberOfLevels, currentLevelNumber, currentLevel);
+
+            try
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(fileStream, saveData);
+                }
+                Console.WriteLine("Game saved successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving the game: " + ex.Message);
             }
         }
 

@@ -143,5 +143,16 @@ namespace GADE6112POE_Part1_v01
         {
 
         }
+        private void SaveGameButton_Click(object sender, EventArgs e)
+        {
+            string filePath = "path_to_save_file.dat"; // Replace with the desired file path
+
+            // Create an instance of GameEngine
+            GameEngine gameEngine = new GameEngine(/* pass necessary parameters */);
+
+            // Call SaveGame method
+            gameEngine.SaveGame(filePath);
+        }
+
     }
 }
