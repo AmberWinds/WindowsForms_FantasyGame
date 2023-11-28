@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public abstract class CharacterTile : Tile
     {
         //variables
@@ -30,17 +31,23 @@ namespace GADE6112POE_Part1_v01
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)
         {
-            //bool canMoveUp = currentPosition.X < vision.getHeight -1 && currentPosition.X > 1;
-            //bool canMoveDown = currentPosition.X < vision.getHeight - 1 && currentPosition.X > 0;
-            //bool canMoveRight = currentPosition.Y < vision.getWidth - 1 && currentPosition.Y > 0;
-            //bool canMoveLeft = currentPosition.X < vision.getWidth - 1 && currentPosition.Y > 1;
+            if (currentPosition != null)
+            {
+                //tests to see if Character can move
+                bool canMoveUp = currentPosition.X > 1;
+                bool canMoveDown = currentPosition.X < vision.getHeight - 2;
+                bool canMoveRight = currentPosition.Y < vision.getWidth - 2;
+                bool canMoveLeft = currentPosition.Y > 1;
 
-            //if Cannot Move, Vision remains Unchanged.
-            visionArray[0] = vision.Tiles[currentPosition.X - 1, currentPosition.Y]; //Up Tile 
-            visionArray[1] = vision.Tiles[currentPosition.X, currentPosition.Y+1]; //Right Tile 
-            visionArray[2] = vision.Tiles[currentPosition.X + 1, currentPosition.Y]; //Down Tile 
-            visionArray[3] = vision.Tiles[currentPosition.X, currentPosition.Y - 1]; //Left Tile
-   
+                //if Cannot Move, Vision remains Unchanged.
+                visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X - 1, currentPosition.Y] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Up Tile 
+                visionArray[1] = canMoveRight ? vision.Tiles[currentPosition.X, currentPosition.Y + 1] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Right Tile 
+                visionArray[2] = canMoveDown ? vision.Tiles[currentPosition.X + 1, currentPosition.Y] : vision.Tiles[currentPosition.X + 1, currentPosition.Y]; //Down Tile 
+                visionArray[3] = canMoveLeft ? vision.Tiles[currentPosition.X, currentPosition.Y - 1] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Left Tile
+            }
+
+
+
         }//end of Update Vision 
 
         public void TakeDamage(int damage)

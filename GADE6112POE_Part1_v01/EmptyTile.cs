@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public class EmptyTile : Tile // class inherits from tile class
     {
         private char emptyTile = '.';

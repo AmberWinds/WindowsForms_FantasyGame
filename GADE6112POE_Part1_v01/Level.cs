@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public class Level
     {
         //private variables
@@ -156,6 +157,23 @@ namespace GADE6112POE_Part1_v01
                     tileTarget.positionX = tileMoving.positionY;
                     tileTarget.positionY = tileMoving.positionY;
                 }
+            }
+        }
+
+        public void UpdateExit()
+        {
+            int deadCount = 0;
+            foreach (var enemy in enemies)
+            {
+                if (enemy.isDead)
+                {
+                    deadCount++;
+                }
+            }
+
+            if (deadCount == enemies.Length)
+            {
+                exit.DoorLocked = false;
             }
         }
 

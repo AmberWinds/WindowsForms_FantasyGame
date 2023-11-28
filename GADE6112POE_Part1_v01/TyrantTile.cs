@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     internal class TyrantTile : EnemyTile
     {
         private const int hitPoints = 15;

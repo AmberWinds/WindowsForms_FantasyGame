@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public abstract class EnemyTile: CharacterTile
     {
         protected Level enemyLevel;

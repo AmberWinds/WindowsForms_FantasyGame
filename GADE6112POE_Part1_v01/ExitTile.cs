@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public class ExitTile : Tile
     {
-        private bool doorLocked;
+        private bool doorLocked = true;
         public ExitTile(Position exit) : base(exit)
         {
 
         }
 
-        public bool DoorLocked { get { return doorLocked; } }
+        public bool DoorLocked { get { return doorLocked; } set { doorLocked = value; } }
         public override char Display //Sets '▒' as an ExitTile and sends data to display as an additional display function
         {
             get { if (DoorLocked) { return '▓'; } else { return '▒'; } }

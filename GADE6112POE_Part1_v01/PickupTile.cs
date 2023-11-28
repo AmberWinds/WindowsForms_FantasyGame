@@ -10,6 +10,7 @@ namespace GADE6112POE_Part1_v01
 
     namespace GADE6112POE_Part1_v01
     {
+        [Serializable]
         public abstract class PickupTile : Tile
         {
             public PickupTile(Position position) : base(position)

@@ -4,20 +4,25 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using static GADE6112POE_Part1_v01.Level;
 
 namespace GADE6112POE_Part1_v01
 {
-    internal class GameEngine
+    [Serializable]
+    public class GameEngine
     {
+        //Level 
         private Level currentLevel;             //stores current level
         private int numberOfLevels;             //number of Levels
         private Random random = new Random();   //used with constants to determine size of the Level.
         private int width;
         private int height;
-        private int levelnumber = 1;
+
+        //Hero
         private HeroTile currentHero;
         private Position heroStand;
 
@@ -30,6 +35,9 @@ namespace GADE6112POE_Part1_v01
         //constants
         private const int maxSize = 20;
         private const int minSize = 10;
+
+        //GameData
+        private IFormatter saveFormatter;
 
         //Enums
         public enum GameState   //GameState Enum, communicates the current stage of the game
@@ -48,7 +56,6 @@ namespace GADE6112POE_Part1_v01
             width = random.Next(minSize, maxSize);        //every Level is Randomized
             height = random.Next(minSize, maxSize);
             currentLevel = new Level(width, height, NumEnemySpawn(),numPickUp);
-            //heroStats = currentLevel.Hero.HitPoints;
         }
 
 
@@ -70,7 +77,7 @@ namespace GADE6112POE_Part1_v01
         public void TriggerMovement(Level.Direction move)
         {
            
-           currentLevel.Hero.UpdateVision(currentLevel, currentLevel.HeroPosition);
+           UpdateVision();
            if (gameState == GameState.GameOver || gameState == GameState.Complete)
            {
                 return; // Game is over, do nothing
@@ -81,14 +88,7 @@ namespace GADE6112POE_Part1_v01
             if (successfulMoves >= 2 )
             {
                 MoveEnemies();
-                
-                for (int i = 0; i < currentLevel.Enemies.Length; i++)
-                {
-                    EnemyTile enemy;
-                    enemy = currentLevel.Enemies[i];
-                    Position enemyUnit = new Position(enemy.positionX, enemy.positionY);
-                    enemy.UpdateVision(currentLevel, enemyUnit);
-                }
+                UpdateVision();
                 
                 successfulMoves = 0;
             }
@@ -97,8 +97,8 @@ namespace GADE6112POE_Part1_v01
         private bool MoveHero(Level.Direction move)
         {
                     Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
-            Tile targetTile;
             Position targetPosition;
+            Tile targetTile;
             int numVision = ToInt(move); //turns into an integer for the Switch Statement
             //New Switch and case Using Vision Methods
             //sets the Target Position, based on the position of the Hero.          //I don't know why it breaks, I've done eberything, and i still don't know, The problem appears to be coming from the the Vision arrays code but the same Code also Works except when it doesn't and I don't kniw what to do
@@ -108,15 +108,13 @@ namespace GADE6112POE_Part1_v01
                 case 1: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y + 1]; break;
                 case 2: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X + 1, currentLevel.HeroPosition.Y]; break;
                 case 3: targetTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y - 1]; break;
-                    default:    return false;
+                default: return false;
             }
-            
 
             Tile heroTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y];
 
             //Testing
             Console.WriteLine("\n" + move);
-            Console.WriteLine("(MoveHero) Hero Position from HeroTile Class: "+ currentLevel.Hero.HerosPlace.X + " "+ currentLevel.Hero.HerosPlace.Y);
             Console.WriteLine("(MoveHero) Hero Position from Level Class"+ currentLevel.HeroPosition.X + " "+ currentLevel.HeroPosition.Y);
             Console.WriteLine("(MoveHero)Hero Position from heroTile Tile: " + heroTile.positionX + " " + heroTile.positionY);
             Console.WriteLine( "(MoveHero) targetTile x and y: "+ targetTile.positionX+ " "+ targetTile.positionY);
@@ -131,14 +129,23 @@ namespace GADE6112POE_Part1_v01
 
             if (targetTile is ExitTile)
             {
-                if (levelnumber == numberOfLevels)
+                if (currentLevelNumber == numberOfLevels)
                 {                  
                     gameState = GameState.Complete;
                     return false;
                 }
                 else
-                {                   
-                    NextLevel(); return true;
+                {
+                    UpdateVision();
+                    if (currentLevel.Exit.DoorLocked == false)
+                    {
+                        NextLevel(); return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
                 }
             }
             else
@@ -184,7 +191,7 @@ namespace GADE6112POE_Part1_v01
 
         }
 
-        //HERO ATTACK METHODS
+        // ATTACK METHODS
         private bool HeroAttack(Level.Direction attack)
         {
             int attackDirec = ToInt(attack);
@@ -219,6 +226,7 @@ namespace GADE6112POE_Part1_v01
                 {
                     // After a successful hero attack, trigger enemies' attacks
                     EnemiesAttack();
+                    currentLevel.UpdateExit();
 
                     // Check if the hero is dead
                     if (currentLevel.Hero.isDead)
@@ -270,7 +278,7 @@ namespace GADE6112POE_Part1_v01
         //Enemy Spawn Method
         public int NumEnemySpawn()
         {
-            switch(levelnumber)
+            switch(currentLevelNumber)
             {
                 case 1: return 2;
                 case 2: return 3;
@@ -305,10 +313,10 @@ namespace GADE6112POE_Part1_v01
         //GAME STATE METHODS
         public void NextLevel()
         {
-            levelnumber++;
+            currentLevelNumber++;
             currentHero = currentLevel.Hero;
 
-            if (levelnumber < numberOfLevels)
+            if (currentLevelNumber < numberOfLevels)
             {
                 while(true)
                 {
@@ -345,7 +353,7 @@ namespace GADE6112POE_Part1_v01
             else { return "Invalid GameState"; }
         }
 
-
+        //UI Stats for Player
         public string HeroStats
         {
             get
@@ -358,6 +366,37 @@ namespace GADE6112POE_Part1_v01
                 }
                 return "N/A"; // Handle the case when there is no hero
             }
+        }
+
+        public string LevelStats
+        {
+            get
+            {
+                return $"{currentLevelNumber}/{numberOfLevels}";
+            }
+        }
+
+        //GAME DATA METHODS
+        public void SaveGame()
+        {
+            SaveGameData saveGame = new SaveGameData(numberOfLevels, currentLevelNumber, currentLevel);
+
+            saveFormatter = new BinaryFormatter();
+            Stream stream = new FileStream("SaveData.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            saveFormatter.Serialize(stream, saveGame);
+            stream.Close();
+
+        }
+
+        public void LoadGame()
+        {
+            if (saveFormatter != null)
+            {
+                Stream readStream = new FileStream("SaveData.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+                currentLevel = (Level)saveFormatter.Deserialize(readStream);
+                readStream.Close();
+            }
+
         }
 
 

@@ -27,6 +27,7 @@ namespace GADE6112POE_Part1_v01
         public void UpdateHealth()
         {
             lblHeroHealth.Text = "Health: " + game.HeroStats;
+            lblLevelNumber.Text = "Level: " + game.LevelStats;
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData) //override bool ProcessCMDKey to get Key input.
@@ -142,6 +143,16 @@ namespace GADE6112POE_Part1_v01
         private void lblAttackStat_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSaveGame_Click(object sender, EventArgs e)
+        {
+            game.SaveGame();
+        }
+
+        private void btnLoadGame_Click(object sender, EventArgs e)
+        {
+            game.LoadGame();
         }
     }
 }
