@@ -130,6 +130,8 @@ namespace GADE6112POE_Part1_v01
                     return CreateEnemyTile(position);
                 case TileType.PickUp:
                     return new HealthPickupTile(position);
+                case TileType.PickUp
+                    return CreatePickupTile(position);
             }
         }//end of Method
 
@@ -200,6 +202,20 @@ namespace GADE6112POE_Part1_v01
             }
         }
 
+        private PickupTile CreatePickupTile(Position position)
+        {
+            Random random = new Random();
+            double chance = random.NextDouble();
+
+            if(chance <= 0.66666)//66.6% chance for HealthPickupTile
+            {
+                return new HealthPickupTile(position);
+            }
+            else //33.3% chance for AttackBuff...
+            {
+                return new AttackBuffPickupTile(position);
+            }
+        }
 
         private void InitialiseTiles()
         {

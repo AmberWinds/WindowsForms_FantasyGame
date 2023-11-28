@@ -14,6 +14,7 @@ namespace GADE6112POE_Part1_v01
         private int hitPoints;
         private int maxHP;
         private Tile[] visionArray;
+        private int doubleDamageCount;
 
         //CONSTRUCTOR
         public CharacterTile(Position pos, int hitPonts, int atkPower) : base(pos)
@@ -22,6 +23,7 @@ namespace GADE6112POE_Part1_v01
             maxHP = hitPonts;
             attackPower = atkPower;
             visionArray = new Tile[4];
+            doubleDamageCount = 0;
         }
         //PROPERTIES
         public Tile[] Vision { get { return visionArray; } set { visionArray = value; } }
@@ -72,7 +74,15 @@ namespace GADE6112POE_Part1_v01
 
         public void Attack(CharacterTile opponent)
         {
-            TakeDamage(opponent.attackPower);
+            if (doubleDamageCount > 0)
+            {
+                TakeDamage(opponent.attackPower * 2); // Apply double damage
+                doubleDamageCount--; // Decrease doubleDamageCount
+            }
+            else
+            {
+                TakeDamage(opponent.attackPower); // Normal damage
+            }
         }
 
         public bool isDead //method to check if the character HP is sufficient to continue playing
@@ -82,6 +92,10 @@ namespace GADE6112POE_Part1_v01
                 if (hitPoints <= 0) { return true; } else { return false; } //Hp is 0 or less, character is dead and unable to continue playing.
             }
         }//end of isDead
+        public void SetDoubleDamage(int count)
+        {
+            doubleDamageCount += count * 3; // Multiplying count by 3 for triple attack buff stacking
+        }
 
 
     }
