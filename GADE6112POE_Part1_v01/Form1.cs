@@ -146,7 +146,7 @@ namespace GADE6112POE_Part1_v01
 
         private void SaveGameButton_Click_1(object sender, EventArgs e)
         {
-            string filePath = "path_to_save_file.dat"; // Replace with the desired file path
+            string filePath = "path_to_save_file.dat"; // i dont know what to replace it with 
 
             // Create an instance of GameEngine
             GameEngine gameEngine = new GameEngine(/* pass necessary parameters */);
