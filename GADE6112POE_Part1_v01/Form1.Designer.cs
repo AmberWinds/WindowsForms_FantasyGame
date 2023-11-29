@@ -43,13 +43,12 @@
             // 
             // lblDisplay
             // 
-            lblDisplay.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblDisplay.Location = new Point(54, 45);
-            lblDisplay.Name = "lblDisplay";
-            lblDisplay.Size = new Size(436, 538);
-            lblDisplay.TabIndex = 0;
-            lblDisplay.Text = "Display Level Here";
-            lblDisplay.Click += lblDisplay_Click;
+            this.lblDisplay.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblDisplay.Location = new System.Drawing.Point(54, 45);
+            this.lblDisplay.Name = "lblDisplay";
+            this.lblDisplay.Size = new System.Drawing.Size(436, 538);
+            this.lblDisplay.TabIndex = 0;
+            this.lblDisplay.Text = "Display Level Here";
             // 
             // lblHeading
             // 
@@ -65,13 +64,13 @@
             // 
             // lblBorder
             // 
-            lblBorder.AutoSize = true;
-            lblBorder.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lblBorder.Location = new Point(496, 19);
-            lblBorder.Name = "lblBorder";
-            lblBorder.Size = new Size(17, 616);
-            lblBorder.TabIndex = 2;
-            lblBorder.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n";
+            this.lblBorder.AutoSize = true;
+            this.lblBorder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblBorder.Location = new System.Drawing.Point(496, 19);
+            this.lblBorder.Name = "lblBorder";
+            this.lblBorder.Size = new System.Drawing.Size(17, 616);
+            this.lblBorder.TabIndex = 2;
+            this.lblBorder.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n";
             // 
             // lblInstructions
             // 
