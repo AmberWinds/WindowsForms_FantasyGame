@@ -179,8 +179,9 @@ namespace GADE6112POE_Part1_v01
                     tileMoving.positionX = tileTarget.positionX;
                     tileMoving.positionY = tileTarget.positionY;
                     tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
-                    Console.WriteLine("tile Moving swapped with tile target:" + tileMoving.positionX + " " + tileMoving.positionY);
 
+                    Console.WriteLine("tile Moving swapped with tile target:" + tileMoving.positionX + " " + tileMoving.positionY);
+                    
                     tileTarget.positionX = tileTemp.positionX;
                     tileTarget.positionY = tileTemp.positionY;
                     tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp 
