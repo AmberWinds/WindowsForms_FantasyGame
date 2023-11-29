@@ -165,9 +165,7 @@ namespace GADE6112POE_Part1_v01
         {
             //Swap the tiles in the 2D array
             Tile tileTemp = null;
-            Console.WriteLine("\nheroPosition in Swap (Level Class): "+ heroPosition.X + " "+ heroPosition.Y);
-            Console.WriteLine("tileMoving in Swap: " + tileMoving.positionX + " " + tileMoving.positionY);
-            Console.WriteLine("targetTile in Swap: " + tileTarget.positionX + " " + tileTarget.positionY);
+
             int tileMovingIndexX = tileMoving.positionX;
             int tileMovingIndexY = tileMoving.positionY;
             int tileTargetIndexX = tileTarget.positionX;
@@ -186,15 +184,7 @@ namespace GADE6112POE_Part1_v01
                     tileMoving.positionY = tileTargetIndexY;
                     tileTarget.positionX = tileMovingIndexX;
                     tileTarget.positionY = tileMovingIndexY;
-                    Console.WriteLine("tile Moving swapped with tile target:" + tileMoving.positionX + " " + tileMoving.positionY);
 
-                    //tiles[tileTarget.positionX, tileTarget.positionY].positionX = tileTarget.positionX;
-                    //tiles[tileTarget.positionX, tileTarget.positionY].positionY = tileTarget.positionY;
-                    //tileTarget.positionX = tileTemp.positionX;
-                    //tileTarget.positionY = tileTemp.positionY;
-                    //tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp 
-
-                    Console.WriteLine("tile target swapped with tile Moving stored in temp:" + tileTarget.positionX);
                 }
             }
         }

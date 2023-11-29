@@ -98,7 +98,6 @@ namespace GADE6112POE_Part1_v01
         }
         private bool MoveHero(Level.Direction move)
         {
-                    Console.WriteLine(" \nHeroPosition from Level Class: " + currentLevel.HeroPosition.X + " " + currentLevel.HeroPosition.Y);
             Position targetPosition;
             Tile targetTile;
             int numVision = ToInt(move); //turns into an integer for the Switch Statement
@@ -115,12 +114,6 @@ namespace GADE6112POE_Part1_v01
 
             Tile heroTile = currentLevel.Tiles[currentLevel.HeroPosition.X, currentLevel.HeroPosition.Y];
 
-            //Testing
-            Console.WriteLine("\n" + move);
-            Console.WriteLine("(MoveHero) Hero Position from Level Class"+ currentLevel.HeroPosition.X + " "+ currentLevel.HeroPosition.Y);
-            Console.WriteLine("(MoveHero)Hero Position from heroTile Tile: " + heroTile.positionX + " " + heroTile.positionY);
-            Console.WriteLine( "(MoveHero) targetTile x and y: "+ targetTile.positionX+ " "+ targetTile.positionY);
-
             if (targetTile is HealthPickupTile)
             {
                 targetPosition = new Position(targetTile.positionX, targetTile.positionY);
@@ -135,7 +128,7 @@ namespace GADE6112POE_Part1_v01
                 currentLevel.Hero.SetDoubleDamage(1);
                 targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
                 currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
-            }
+            }                
 
             if (targetTile is ExitTile)
             {
@@ -207,11 +200,15 @@ namespace GADE6112POE_Part1_v01
         {
             int attackDirec = ToInt(attack);
             currentLevel.Hero.UpdateVision(currentLevel, heroStand);
+           
             if (currentLevel.Hero.Vision[attackDirec] is EnemyTile)
             {
                 EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
+                if (currentLevel.Hero.DoubleDamageCount > 0)
+                {
+                    enemyTile.TakeDamage(currentLevel.Hero.AttackPower * 2);
+                }
                 enemyTile.TakeDamage(currentLevel.Hero.AttackPower);
-                Console.WriteLine("(HeroAttack) hero attack direction "+ attack);
                 return true;
             }
             else
@@ -252,7 +249,7 @@ namespace GADE6112POE_Part1_v01
         private void EnemiesAttack()
         {
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
-            {;
+            {
                 EnemyTile enemy = currentLevel.Enemies[i];
                 if (enemy == null || enemy.isDead) // Skips the enemy if it's null or dead
                 {
@@ -262,7 +259,7 @@ namespace GADE6112POE_Part1_v01
                 CharacterTile[] targets = enemy.GetTargets();   // Gets the targets that the enemy can attack
                 if (targets == null)
                 {
-
+                    continue;
                 }
                 else
                 {
@@ -278,8 +275,8 @@ namespace GADE6112POE_Part1_v01
                                 gameState = GameState.GameOver;
                             }
                         }
-
                     }
+
                 }
 
             } //endfor
@@ -342,24 +339,6 @@ namespace GADE6112POE_Part1_v01
                 currentLevel = new Level(width, height,NumEnemySpawn(), numPickUp, currentHero);        //Creates a new CurrentLevel.
             }
         }
-       /* public void SaveGame(string filePath)
-        {
-            GameSaveData saveData = new GameSaveData(numberOfLevels, currentLevelNumber, currentLevel);
-
-            try
-            {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(fileStream, saveData);
-                }
-                Console.WriteLine("Game saved successfully!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error saving the game: " + ex.Message);
-            }
-        }*/
 
 
         //ToString Methods
@@ -435,8 +414,6 @@ namespace GADE6112POE_Part1_v01
                     numberOfLevels = saveGame.SaveNumberOfLevels;
                     currentLevelNumber = saveGame.SaveCurrentLevelNum;
                 }
-
-
 
             }
             catch (Exception e)

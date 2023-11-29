@@ -48,19 +48,26 @@ namespace GADE6112POE_Part1_v01
             //int controllers for the while Loops
             for (int i = 1; i < enemyLevel.getWidth-1; i++) //Searching through the *X* values therefore searching through the vertical Space
             {
-                for (int j = 1; j < enemyLevel.getHeight-1; j++)
+                targetTile = enemyLevel.Tiles[i, tyrantPos.Y];
+
+                if (targetTile is CharacterTile)
                 {
-                    targetTile = enemyLevel.Tiles[i, j];
-
-                    if (targetTile is CharacterTile)
-                    {
-                        Targets.Add((CharacterTile)targetTile);
-                    }
-
+                    Targets.Add((CharacterTile)targetTile);
                 }
 
             }//end while
-            
+
+            for (int j = 1; j < enemyLevel.getHeight - 1; j++) //Searching through the y values
+            {
+                targetTile = enemyLevel.Tiles[tyrantPos.X, j];
+
+                if (targetTile is CharacterTile)
+                {
+                    Targets.Add((CharacterTile)targetTile);
+                }
+
+            }
+
             return Targets.ToArray();
 
         }

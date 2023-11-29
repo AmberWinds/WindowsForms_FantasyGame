@@ -23,7 +23,7 @@ namespace GADE6112POE_Part1_v01
             maxHP = hitPonts;
             attackPower = atkPower;
             visionArray = new Tile[4];
-            doubleDamageCount = 3;
+            doubleDamageCount = 0;
         }
 
         //PROPERTIES
@@ -31,6 +31,7 @@ namespace GADE6112POE_Part1_v01
         public int AttackPower { get {  return attackPower; }  }
         public int HitPoints { get { return hitPoints; } set {  hitPoints = value; } }
         public int MaxHP {  get { return maxHP; } }
+        public int DoubleDamageCount { get { return doubleDamageCount; } set { doubleDamageCount = value; } }
         //Methods
         public void UpdateVision(Level vision, Position currentPosition)
         {
@@ -75,15 +76,17 @@ namespace GADE6112POE_Part1_v01
 
         public void Attack(CharacterTile opponent)
         {
-            if (doubleDamageCount > 0)
-            {
-                TakeDamage(opponent.attackPower * 2); // Apply double damage
-                doubleDamageCount--; // Decrease doubleDamageCount
-            }
-            else
-            {
+            Console.WriteLine("Character Attack, doubledamageCount: " + doubleDamageCount);
+            //if (doubleDamageCount > 0)
+            //{
+            //    int newDamage = opponent.attackPower * 2;
+            //    TakeDamage(newDamage); // Apply double damage
+            //    doubleDamageCount--; // Decrease doubleDamageCount
+            //}
+            //else
+            //{
                 TakeDamage(opponent.attackPower); // Normal damage
-            }
+            //}
         }
 
         public bool isDead //method to check if the character HP is sufficient to continue playing
