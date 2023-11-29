@@ -163,7 +163,6 @@ namespace GADE6112POE_Part1_v01
                 if (targetTile is EmptyTile)// && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
                 {                    
                     currentLevel.SwapTiles(heroTile, targetTile);
-                    currentLevel.CreateTile(TileType.Empty, heroTile.positionX, heroTile.positionY);
                     successfulMoves++;
                     UpdateVision();
                     return true;
