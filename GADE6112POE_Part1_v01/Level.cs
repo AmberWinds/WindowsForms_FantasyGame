@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GADE6112POE_Part1_v01.Level;
 
 namespace GADE6112POE_Part1_v01
 {
@@ -55,7 +56,7 @@ namespace GADE6112POE_Part1_v01
             for (int i = 0; i < numPickUps; i++)
             {
                 Position pickUpPosition = GetRandomEmptyPosition();
-                pickupTiles[i] = (HealthPickupTile)CreateTile(TileType.PickUp, pickUpPosition);
+                pickupTiles[i] = (PickupTile)CreateTile(TileType.PickUp, pickUpPosition);
                 tiles[pickUpPosition.X, pickUpPosition.Y] = pickupTiles[i];
             }
 
@@ -129,17 +130,41 @@ namespace GADE6112POE_Part1_v01
                 case TileType.Enemy:  // this case is for creating GruntTile
                     return CreateEnemyTile(position);
                 case TileType.PickUp:
-                    return new HealthPickupTile(position);
-                case TileType.PickUp
                     return CreatePickupTile(position);
+
             }
         }//end of Method
 
+        public Tile CreateTile(TileType tileType, int x, int y)
+        {
+            
+            Position position = new Position(x, y);
+            
+            switch (tileType)
+            {
+                case TileType.Empty: // Use correct case for enum values
+                    return new EmptyTile(position);
+                case TileType.Wall:
+                    return new WallTile(position);
+                case TileType.Hero:
+                    return new HeroTile(position);
+                case TileType.Exit:
+                    return new ExitTile(position);
+                default:
+                    return new EmptyTile(position);
+                case TileType.Enemy:  // this case is for creating GruntTile
+                    return CreateEnemyTile(position);
+                case TileType.PickUp:
+                    return CreatePickupTile(position);
+
+            }
+        }
+
+
         public void SwapTiles(Tile tileMoving, Tile tileTarget)
         {
-
             //Swap the tiles in the 2D array
-            Tile tileTemp;
+            Tile tileTemp = null;
             Console.WriteLine("\nheroPosition in Swap (Level Class): "+ heroPosition.X + " "+ heroPosition.Y);
             Console.WriteLine("tileMoving in Swap: " + tileMoving.positionX + " " + tileMoving.positionY);
             Console.WriteLine("targetTile in Swap: " + tileTarget.positionX + " " + tileTarget.positionY);
@@ -147,17 +172,21 @@ namespace GADE6112POE_Part1_v01
             if (tileMoving.positionX >= 0 && tileMoving.positionX < width && tileMoving.positionY >= 0 && tileMoving.positionY < height)
             {
                 if (tileTarget.positionX >= 0 && tileTarget.positionX < width && tileTarget.positionY >= 0 && tileTarget.positionY < height) //tests if TargetTile is Valid Before Swap
-                {
-                    tileTemp = tiles[tileMoving.positionX, tileMoving.positionY];                                      //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
-                    tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
-                    tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp
+                {    
+                    tileTemp = tiles[tileMoving.positionX, tileMoving.positionY]; //Local Variable is being used to Store an Array of tiles [tilex.x , tilex.y]
 
                     //Update the x and y positions of the tiles
                     tileMoving.positionX = tileTarget.positionX;
                     tileMoving.positionY = tileTarget.positionY;
+                    tiles[tileMoving.positionX, tileMoving.positionY] = tiles[tileTarget.positionX, tileTarget.positionY];
+                    Console.WriteLine("tile Moving swapped with tile target:" + tileMoving.positionX + " " + tileMoving.positionY);
 
-                    tileTarget.positionX = tileMoving.positionY;
-                    tileTarget.positionY = tileMoving.positionY;
+                    tileTarget.positionX = tileTemp.positionX;
+                    tileTarget.positionY = tileTemp.positionY;
+                    tiles[tileTarget.positionX, tileTarget.positionY] = tileTemp; //tileTemp 
+
+                    Console.WriteLine("tile target swapped with tile Moving stored in temp:" + tileTarget.positionX);
+
                 }
             }
         }

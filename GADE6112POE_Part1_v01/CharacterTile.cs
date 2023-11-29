@@ -23,8 +23,9 @@ namespace GADE6112POE_Part1_v01
             maxHP = hitPonts;
             attackPower = atkPower;
             visionArray = new Tile[4];
-            doubleDamageCount = 0;
+            doubleDamageCount = 3;
         }
+
         //PROPERTIES
         public Tile[] Vision { get { return visionArray; } set { visionArray = value; } }
         public int AttackPower { get {  return attackPower; }  }
@@ -36,10 +37,10 @@ namespace GADE6112POE_Part1_v01
             if (currentPosition != null)
             {
                 //tests to see if Character can move
-                bool canMoveUp = currentPosition.X > 1;
-                bool canMoveDown = currentPosition.X < vision.getHeight - 2;
-                bool canMoveRight = currentPosition.Y < vision.getWidth - 2;
-                bool canMoveLeft = currentPosition.Y > 1;
+                bool canMoveUp = currentPosition.X > 0;
+                bool canMoveDown = currentPosition.X < vision.getHeight - 1;
+                bool canMoveRight = currentPosition.Y < vision.getWidth - 1;
+                bool canMoveLeft = currentPosition.Y > 0;
 
                 //if Cannot Move, Vision remains Unchanged.
                 visionArray[0] = canMoveUp ? vision.Tiles[currentPosition.X - 1, currentPosition.Y] : vision.Tiles[currentPosition.X, currentPosition.Y]; //Up Tile 

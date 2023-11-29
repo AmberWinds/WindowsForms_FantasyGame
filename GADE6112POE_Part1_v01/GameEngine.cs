@@ -17,6 +17,7 @@ namespace GADE6112POE_Part1_v01
     {
         //Level 
         private Level currentLevel;             //stores current level
+        [NonSerialized]
         private int numberOfLevels;             //number of Levels
         private Random random = new Random();   //used with constants to determine size of the Level.
         private int width;
@@ -27,6 +28,7 @@ namespace GADE6112POE_Part1_v01
         private Position heroStand;
 
         //private int enemySpawn;   Commenting out as it is Unused at the Moment
+        [NonSerialized]
         private GameState gameState = GameState.InProgress;
         private int successfulMoves = 0; // Field to count successful moves
         private int currentLevelNumber = 1; // Added field to track current level number
@@ -38,6 +40,7 @@ namespace GADE6112POE_Part1_v01
 
         //GameData
         private IFormatter saveFormatter;
+        private SaveGameData saveGame;
 
         //Enums
         public enum GameState   //GameState Enum, communicates the current stage of the game
@@ -76,14 +79,13 @@ namespace GADE6112POE_Part1_v01
         //MOVEMENT METHODS
         public void TriggerMovement(Level.Direction move)
         {
-           
-           UpdateVision();
+            MoveHero(move);
+            UpdateVision();
            if (gameState == GameState.GameOver || gameState == GameState.Complete)
            {
                 return; // Game is over, do nothing
            }
 
-            MoveHero(move);
             // Checks if it's time to move enemies (every 2 successful moves)
             if (successfulMoves >= 2 )
             {
@@ -127,6 +129,14 @@ namespace GADE6112POE_Part1_v01
                 currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
             }
 
+            if (targetTile is AttackBuffPickupTile)
+            {
+                targetPosition = new Position(targetTile.positionX, targetTile.positionY);
+                currentLevel.Hero.SetDoubleDamage(1);
+                targetTile = (EmptyTile)currentLevel.CreateTile(TileType.Empty, targetPosition);
+                currentLevel.Tiles[targetPosition.X, targetPosition.Y] = targetTile;
+            }
+
             if (targetTile is ExitTile)
             {
                 if (currentLevelNumber == numberOfLevels)
@@ -153,6 +163,7 @@ namespace GADE6112POE_Part1_v01
                 if (targetTile is EmptyTile)// && (targetTile.positionX != 0 || targetTile.positionX != height) && (targetTile.positionY != 0 || targetTile.positionX != width))
                 {                    
                     currentLevel.SwapTiles(heroTile, targetTile);
+                    currentLevel.CreateTile(TileType.Empty, heroTile.positionX, heroTile.positionY);
                     successfulMoves++;
                     UpdateVision();
                     return true;
@@ -169,6 +180,7 @@ namespace GADE6112POE_Part1_v01
 
         private void MoveEnemies()
         {
+
             Tile move;// Check if the enemy has a valid move
             for (int i = 0; i < currentLevel.Enemies.Length; i++) // Loop through all the enemies
             {
@@ -377,25 +389,44 @@ namespace GADE6112POE_Part1_v01
         }
 
         //GAME DATA METHODS
-        public void SaveGame()
+        public void SaveGame() 
         {
-            SaveGameData saveGame = new SaveGameData(numberOfLevels, currentLevelNumber, currentLevel);
+            int numOfLevels = numberOfLevels;
+            int currentLevelNum = currentLevelNumber;
+            Level level = currentLevel;
+            saveGame = new SaveGameData(numOfLevels, currentLevelNum, level);
 
-            saveFormatter = new BinaryFormatter();
-            Stream stream = new FileStream("SaveData.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            saveFormatter.Serialize(stream, saveGame);
-            stream.Close();
+            BinaryFormatter saveFormatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream("SaveData.bin", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                saveFormatter.Serialize(stream, saveGame);
+                MessageBox.Show("Game Saved");
+            }
 
         }
 
         public void LoadGame()
         {
-            if (saveFormatter != null)
+
+            try
             {
-                Stream readStream = new FileStream("SaveData.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-                currentLevel = (Level)saveFormatter.Deserialize(readStream);
-                readStream.Close();
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream readStream = new FileStream("SaveData.bin", FileMode.Open))
+                {
+                    saveGame = (SaveGameData)formatter.Deserialize(readStream);
+                    currentLevel = saveGame.SaveLevel;
+                    numberOfLevels = saveGame.SaveNumberOfLevels;
+                    currentLevelNumber = saveGame.SaveCurrentLevelNum;
+                }
+
+
+
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
 
         }
 

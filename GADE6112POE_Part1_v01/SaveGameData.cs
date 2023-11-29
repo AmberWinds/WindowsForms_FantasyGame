@@ -11,20 +11,16 @@ namespace GADE6112POE_Part1_v01
     [Serializable]
     public class SaveGameData
     {
-        private int saveNumberOfLevels;
-        private int saveCurrentLevelNum;
-        private Level saveLevel;
 
-        public int SaveNumberOfLevels { get { return SaveNumberOfLevels; } set { SaveNumberOfLevels = value} }
-        public int SaveCurrentLevelNum {  get { return saveCurrentLevelNum; }  set { SaveCurrentLevelNum = value} }
-        public Level SaveLevel { get {  return saveLevel; } }
+        public int SaveNumberOfLevels { get; set; }
+        public int SaveCurrentLevelNum { get; set; } 
+        public Level SaveLevel { get; set; }
         
-        public SaveGameData( int saveNumofLevel, int saveLevelnum, Level saveLevel)
-        {
-            
-            saveNumberOfLevels = saveNumofLevel;
-            saveCurrentLevelNum = saveLevelnum;
-            this.saveLevel = saveLevel;
+        public SaveGameData(int numberOfLevels, int currentLevelNum, Level currentLevel)
+        { 
+            SaveCurrentLevelNum = currentLevelNum;
+            SaveNumberOfLevels = numberOfLevels;
+            SaveLevel = currentLevel;
         }
 
     } 

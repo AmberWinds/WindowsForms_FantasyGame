@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GADE6112POE_Part1_v01
 {
+    [Serializable]
     public class AttackBuffPickupTile : PickupTile
     {
         public AttackBuffPickupTile(Position pos) : base(pos)
@@ -18,9 +19,9 @@ namespace GADE6112POE_Part1_v01
             character.SetDoubleDamage(1); // Increase double damage count by 3 (each count signifies 3 attacks)
         }
 
-        public override string Display
+        public override char Display
         {
-            get { return "*"; }
+            get { return '*'; }
         }
     }
 }
