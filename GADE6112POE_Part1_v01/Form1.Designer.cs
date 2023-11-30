@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblDisplay = new Label();
             lblHeading = new Label();
             lblBorder = new Label();
@@ -43,40 +44,40 @@
             // 
             // lblDisplay
             // 
-            this.lblDisplay.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblDisplay.Location = new System.Drawing.Point(54, 45);
-            this.lblDisplay.Name = "lblDisplay";
-            this.lblDisplay.Size = new System.Drawing.Size(436, 538);
-            this.lblDisplay.TabIndex = 0;
-            this.lblDisplay.Text = "Display Level Here";
+            lblDisplay.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblDisplay.Location = new Point(54, 45);
+            lblDisplay.Name = "lblDisplay";
+            lblDisplay.Size = new Size(436, 538);
+            lblDisplay.TabIndex = 0;
+            lblDisplay.Text = "Display Level Here";
             // 
             // lblHeading
             // 
             lblHeading.AutoSize = true;
             lblHeading.Font = new Font("Gill Sans Ultra Bold", 19.8000011F, FontStyle.Italic, GraphicsUnit.Point);
             lblHeading.ForeColor = Color.DarkSlateGray;
-            lblHeading.Location = new Point(547, 34);
+            lblHeading.Location = new Point(547, 19);
             lblHeading.Name = "lblHeading";
             lblHeading.Size = new Size(301, 96);
             lblHeading.TabIndex = 1;
-            lblHeading.Text = "WELCOME TO \r\nTHE GAME";
+            lblHeading.Text = "WELCOME TO \r\nMAZE HERO\r\n";
             lblHeading.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblBorder
             // 
-            this.lblBorder.AutoSize = true;
-            this.lblBorder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblBorder.Location = new System.Drawing.Point(496, 19);
-            this.lblBorder.Name = "lblBorder";
-            this.lblBorder.Size = new System.Drawing.Size(17, 616);
-            this.lblBorder.TabIndex = 2;
-            this.lblBorder.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n";
+            lblBorder.AutoSize = true;
+            lblBorder.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lblBorder.Location = new Point(496, 19);
+            lblBorder.Name = "lblBorder";
+            lblBorder.Size = new Size(17, 616);
+            lblBorder.TabIndex = 2;
+            lblBorder.Text = "|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n|\r\n";
             // 
             // lblInstructions
             // 
             lblInstructions.AutoSize = true;
             lblInstructions.Font = new Font("Lucida Bright", 10.2F, FontStyle.Italic, GraphicsUnit.Point);
-            lblInstructions.Location = new Point(582, 130);
+            lblInstructions.Location = new Point(585, 130);
             lblInstructions.Name = "lblInstructions";
             lblInstructions.Size = new Size(234, 133);
             lblInstructions.TabIndex = 3;
@@ -126,7 +127,7 @@
             btnReset.Name = "btnReset";
             btnReset.Size = new Size(123, 35);
             btnReset.TabIndex = 7;
-            btnReset.Text = "Reset";
+            btnReset.Text = "Restart";
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
@@ -185,8 +186,9 @@
             Controls.Add(lblBorder);
             Controls.Add(lblHeading);
             Controls.Add(lblDisplay);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Form1";
+            Text = "MAZE HERO";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();

@@ -426,7 +426,9 @@ namespace GADE6112POE_Part1_v01
 
 
         }
-
+        //Above Code adapted from StackOverFlow User Kuchuk, S.
+        //Kuchuk, S. 2011. Sample Data of Seriliazation[Source code]. 
+        //https://stackoverflow.com/questions/1749044/c-sharp-object-binary-serialization?rq=3 (Accessed 28 November 2023).
 
     }
 }
