@@ -204,6 +204,7 @@ namespace GADE6112POE_Part1_v01
             if (currentLevel.Hero.Vision[attackDirec] is EnemyTile)
             {
                 EnemyTile enemyTile = (EnemyTile)currentLevel.Hero.Vision[attackDirec];
+                //currentLevel.Hero.Attack(enemyTile);
                 if (currentLevel.Hero.DoubleDamageCount > 0)
                 {
                     enemyTile.TakeDamage(currentLevel.Hero.AttackPower * 2);
@@ -290,14 +291,14 @@ namespace GADE6112POE_Part1_v01
             {
                 case 1: return 2;
                 case 2: return 3;
-                case 3: return 4;
-                case 4: return 5;
-                case 5: return 5;
-                case 6: return 6;
-                case 7: return 7;
-                case 8: return 8;
-                case 9: return 9;
-                case 10: return 10;
+                case 3: return 3;
+                case 4: return 4;
+                case 5: return 4;
+                case 6: return 5;
+                case 7: return 6;
+                case 8: return 7;
+                case 9: return 8;
+                case 10: return 8;
                 default: return 0;
             }
         }
@@ -392,11 +393,11 @@ namespace GADE6112POE_Part1_v01
             Level level = currentLevel;
             saveGame = new SaveGameData(numOfLevels, currentLevelNum, level);
 
-            BinaryFormatter saveFormatter = new BinaryFormatter();
-            using (FileStream stream = new FileStream("SaveData.bin", FileMode.Create, FileAccess.Write, FileShare.None))
+            BinaryFormatter saveFormatter = new BinaryFormatter();  //format is Binary Numbers
+            using (FileStream stream = new FileStream("SaveData.bin", FileMode.Create, FileAccess.Write, FileShare.None)) //saves to file : SaveData.bin
             {
                 saveFormatter.Serialize(stream, saveGame);
-                MessageBox.Show("Game Saved");
+                MessageBox.Show("Game Saved");  //confirming with player that the game has been saved
             }
 
         }
@@ -413,6 +414,8 @@ namespace GADE6112POE_Part1_v01
                     currentLevel = saveGame.SaveLevel;
                     numberOfLevels = saveGame.SaveNumberOfLevels;
                     currentLevelNumber = saveGame.SaveCurrentLevelNum;
+
+                    MessageBox.Show("Game Loaded, Press any Arrow Key To Activate"); //Message Box telling player how to Procced
                 }
 
             }
